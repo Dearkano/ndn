@@ -33,8 +33,6 @@ module.exports = appInfo => {
     config.cors = {
         origin: '*',
         allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
-        package: 'egg-cors',
-        enable: true
     };
     return {
         ...config,
