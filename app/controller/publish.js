@@ -10,6 +10,7 @@ const Fiber = require('fibers');
 Interest.setDefaultCanBePrefix(true);
 
 var face = new Face(new UnixTransport());
+const fiber = Fiber.current
 var callbackCount = 0;
 
 
@@ -23,7 +24,6 @@ class PublishController extends Controller {
         var name1 = new Name("/bfs/1e000000000304a17ae21be9df24640ebf6ae2a3bd5f1be76c8056cd55beca1f5463ffcac6157e7750ddfc057629f809b61a2f40c357de65311e8ce95d052d19");
         console.log("Express name " + name1.toUri());
         let content = null
-        const fiber = Fiber.current
         var onData = function (interest, data) {
             console.log("Got data packet with name " + data.getName().toUri());
             console.log(data.getContent().buf().toString('binary'));
