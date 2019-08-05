@@ -46,9 +46,17 @@ class PublishController extends Controller {
             })
         }
         const data = await asyncInterest()
-        content = data.getContent().buf().toString('binary')
-        ctx.body = content
-        ctx.status = 200
+        if (data.code === 0) {
+            content = data.data.getContent().buf().toString('binary')
+            ctx.body = content
+            ctx.status = 200
+        } else {
+            ctx.body = "file not found"
+            ctx.status = 404
+        }
+
+
+
     }
 }
 module.exports = PublishController;
