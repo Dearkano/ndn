@@ -34,7 +34,9 @@ class PublishController extends Controller {
             console.log("Got data packet with name " + data.getName().toUri());
             console.log(data.getContent().buf().toString('binary'));
             content = data.getContent().buf().toString('binary')
-            that.fiber.run()
+            console.log(this)
+            console.log(this.fiber)
+            this.fiber.run()
             if (++callbackCount >= 3)
                 // This will cause the script to quit.
                 face.close();
@@ -47,7 +49,7 @@ class PublishController extends Controller {
                 // This will cause the script to quit.
                 face.close();
         };
-        face.expressInterest(name1, onData, onTimeout);
+        face.expressInterest(name1, onData.bind(this), onTimeout);
         Fiber.yield()
         ctx.body = content
         ctx.status = 200
