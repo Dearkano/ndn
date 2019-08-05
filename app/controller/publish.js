@@ -18,6 +18,7 @@ var callbackCount = 0;
 
 class PublishController extends Controller {
     constructor(){
+        super()
         const fiber = Fiber.current
         this.fiber = fiber
     }
