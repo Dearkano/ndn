@@ -53,7 +53,7 @@ class PublishController extends Controller {
             ctx.status = 200
         })
         fn.run()
-        setTimeout(()=>{},4000)
+        while(true){}
     }
 }
 module.exports = PublishController;
