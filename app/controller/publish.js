@@ -50,7 +50,7 @@ class PublishController extends Controller {
         if (data.code === 0) {
             content = data.data.getContent().buf().toString()
             const json = JSON.parse(content)
-            const {result, config } = json
+            let {result, config } = json
             let arr = result.split(';')
             for(const item of arr){
                 if(item){
@@ -60,6 +60,7 @@ class PublishController extends Controller {
                     }
                 }
             }
+            config = config.replace('\n', ' ')
             let arr1 = config.split(' ')
             for(const item of arr1){
                 if(item){
