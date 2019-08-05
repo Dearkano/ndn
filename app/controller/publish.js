@@ -21,7 +21,9 @@ class PublishController extends Controller {
         const {
             ctx
         } = this
-        const {afid} = ctx.query
+        const {
+            afid
+        } = ctx.query
         let content = null
         var onTimeout = function (interest) {
             console.log("Time out for interest " + interest.getName().toUri());
@@ -35,7 +37,12 @@ class PublishController extends Controller {
             return new Promise(function (resolve) {
                 const name = new Name(`/bfs/${afid}`);
                 console.log("Express name " + name.toUri());
-                face.expressInterest(name, (_, data) => resolve(data), onTimeout);
+                face.expressInterest(name, (_, data) => resolve({
+                    code: 0,
+                    data
+                }), () => resolve({
+                    code: 1
+                }));
             })
         }
         const data = await asyncInterest()
