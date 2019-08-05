@@ -25,12 +25,9 @@ module.exports = appInfo => {
     // 加载 errorHandler 中间件
     config.middleware = [];
     config.security = {
-        csrf: {
-            enable: false,
-        },
     };
     config.cors = {
-        origin: 'http://localhost:7001',
+        origin: '*',
         allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
         credentials: true
     };
