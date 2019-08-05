@@ -47,7 +47,7 @@ class PublishController extends Controller {
         // }
         // console.log('before return')
         // console.log(content)
-
+        while(true){}
     }
 }
 module.exports = PublishController;
