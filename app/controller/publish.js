@@ -21,6 +21,7 @@ class PublishController extends Controller {
         const {
             ctx
         } = this
+        const {afid} = ctx.query
         let content = null
         var onTimeout = function (interest) {
             console.log("Time out for interest " + interest.getName().toUri());
@@ -29,16 +30,11 @@ class PublishController extends Controller {
                 // This will cause the script to quit.
                 face.close();
         };
-        const onData = function (interest, data) {
-            console.log("Got data packet with name " + data.getName().toUri());
-            content = data.getContent().buf().toString('binary')
-            ctx.body = content
-        };
 
         function asyncInterest() {
             return new Promise(function (resolve) {
-                const name1 = new Name("/bfs/1e000000000304a17ae21be9df24640ebf6ae2a3bd5f1be76c8056cd55beca1f5463ffcac6157e7750ddfc057629f809b61a2f40c357de65311e8ce95d052d19");
-                console.log("Express name " + name1.toUri());
+                const name = new Name(`/bfs/${afid}`);
+                console.log("Express name " + name.toUri());
                 face.expressInterest(name1, (_, data) => resolve(data), onTimeout);
             })
         }
@@ -46,8 +42,6 @@ class PublishController extends Controller {
         content = data.getContent().buf().toString('binary')
         ctx.body = content
         ctx.status = 200
-
-        //while(true){}
     }
 }
 module.exports = PublishController;
