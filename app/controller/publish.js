@@ -20,6 +20,8 @@ class PublishController extends Controller {
     constructor(ctx){
         super(ctx)
         const fiber = Fiber.current
+        console.log('in constructor')
+        console.log(fiber)
         this.fiber = fiber
     }
     async getFileInfo() {
