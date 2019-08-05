@@ -28,8 +28,7 @@ module.exports = appInfo => {
         csrf: {
             enable: false,
             ignoreJSON: true
-        },
-        domainWhiteList: '*'
+        }
     };
     config.cors = {
         origin: '*',
