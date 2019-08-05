@@ -27,6 +27,8 @@ class PublishController extends Controller {
             console.log("Got data packet with name " + data.getName().toUri());
             console.log(data.getContent().buf().toString('binary'));
             content = data.getContent().buf().toString('binary')
+            ctx.body = content
+            ctx.status = 200
             if (++callbackCount >= 3)
                 // This will cause the script to quit.
                 face.close();
@@ -40,13 +42,12 @@ class PublishController extends Controller {
                 face.close();
         };
         face.expressInterest(name1, onData, onTimeout);
-        while (true) {
-            if (content) break
-        }
-        console.log('before return')
-        console.log(content)
-        ctx.body = content
-        ctx.status = 200
+        // while (true) {
+        //     if (content) break
+        // }
+        // console.log('before return')
+        // console.log(content)
+
     }
 }
 module.exports = PublishController;
