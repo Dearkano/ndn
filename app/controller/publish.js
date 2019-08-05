@@ -28,9 +28,11 @@ class PublishController extends Controller {
             content = data.getContent().buf().toString('binary')
             console.log('before run')
             fn.run()
+            ctx.body=content
             if (++callbackCount >= 3)
                 // This will cause the script to quit.
                 face.close();
+
         };
 
         var onTimeout = function (interest) {
