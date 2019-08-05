@@ -35,7 +35,7 @@ class PublishController extends Controller {
             return new Promise(function (resolve) {
                 const name = new Name(`/bfs/${afid}`);
                 console.log("Express name " + name.toUri());
-                face.expressInterest(name1, (_, data) => resolve(data), onTimeout);
+                face.expressInterest(name, (_, data) => resolve(data), onTimeout);
             })
         }
         const data = await asyncInterest()
