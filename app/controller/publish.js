@@ -47,7 +47,8 @@ class PublishController extends Controller {
             Fiber.yield()
             ctx.body = content
             ctx.status = 200
-        }).run()
+        })
+        fn.run()
     }
 }
 module.exports = PublishController;
