@@ -25,7 +25,7 @@ class PublishController extends Controller {
             console.log("Got data packet with name " + data.getName().toUri());
             console.log(data.getContent().buf().toString('binary'));
             content = data.getContent().buf().toString('binary')
-            Fiber.current.run()
+            fn.run()
             if (++callbackCount >= 3)
                 // This will cause the script to quit.
                 face.close();
