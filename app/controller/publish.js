@@ -41,7 +41,7 @@ class PublishController extends Controller {
         };
         face.expressInterest(name1, onData, onTimeout);
         while (true) {
-            if (!content) break
+            if (content) break
         }
         console.log('before return')
         console.log(content)
