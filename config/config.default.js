@@ -25,11 +25,16 @@ module.exports = appInfo => {
     // 加载 errorHandler 中间件
     config.middleware = [];
     config.security = {
+        csrf: {
+            enable: false,
+            ignoreJSON: true
+        },
+        domainWhiteList: '*'
     };
     config.cors = {
         origin: '*',
         allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
-        credentials: true
+        package: 'egg-cors',
     };
     return {
         ...config,
