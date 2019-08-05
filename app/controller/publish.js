@@ -43,6 +43,8 @@ class PublishController extends Controller {
         while (true) {
             if (!content) break
         }
+        console.log('before return')
+        console.log(content)
         ctx.body = content
         ctx.status = 200
     }
