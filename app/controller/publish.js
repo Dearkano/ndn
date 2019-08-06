@@ -82,7 +82,7 @@ class PublishController extends Controller {
         } = ctx.query
         let content = null
 
-        function asyncInterest(n) {
+        async function asyncInterest(n) {
             return new Promise(function (resolve) {
                 console.log("Express name " + n.toUri());
                 face.expressInterest(n, (_, data) => resolve({
@@ -100,8 +100,6 @@ class PublishController extends Controller {
             if (data.code === 0) {
                 content = data.data.getContent().buf().toString()
                 const obj = JSON.parse(content)
-                console.log(obj)
-                console.log(obj.end)
                 total += content
                 if(obj.end===true||obj.end==='true') break
             } else {
