@@ -95,6 +95,7 @@ class PublishController extends Controller {
             })
         }
         let total = ''
+        let success = true
         for(let i = 0;;i++){
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
             const data = await asyncInterest(name)
@@ -106,20 +107,25 @@ class PublishController extends Controller {
                 total += obj.data.toString('utf8')
                 if(obj.end===true||obj.end==='true') break
             } else {
-                ctx.body = "file not found"
-                ctx.status = 404
+                success= false
+                break
             }
         }
         console.log('out loop')
 
-        const buffer = new Buffer(total, 'utf-8')
-        const bufferStream = new stream.PassThrough();
-        bufferStream.end(buffer);
-        // fs.writeFileSync(`/root/ndn-tmp/${afid}.dat`, content)
-        ctx.attachment(`${afid}.txt`)
-        ctx.set('Content-Type', 'application/octet-stream')
-        ctx.body = bufferStream
-        ctx.status = 200
+        if(success){
+            const buffer = new Buffer(total, 'utf-8')
+            const bufferStream = new stream.PassThrough();
+            bufferStream.end(buffer);
+            // fs.writeFileSync(`/root/ndn-tmp/${afid}.dat`, content)
+            ctx.attachment(`${afid}.txt`)
+            ctx.set('Content-Type', 'application/octet-stream')
+            ctx.body = bufferStream
+            ctx.status = 200
+        }else{
+            ctx.body = "file not found"
+            ctx.status = 404
+        }
     }
 }
 module.exports = PublishController;
