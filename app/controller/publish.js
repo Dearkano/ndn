@@ -102,6 +102,7 @@ class PublishController extends Controller {
                 const obj = JSON.parse(content)
                 console.log('receive data = '+ content)
                 console.log(obj)
+                console.log(obj.end)
                 total += content
                 if(obj.end) break
             } else {
