@@ -96,10 +96,11 @@ class PublishController extends Controller {
         const data = await asyncInterest()
         if (data.code === 0) {
             content = data.data.getContent().buf().toString()
-            fs.writeFileSync(`/root/ndn-tmp/${afid}.dat`, content)
+            const buffer = new Buffer(content)
+            // fs.writeFileSync(`/root/ndn-tmp/${afid}.dat`, content)
             ctx.attachment(`${afid}.txt`)
             ctx.set('Content-Type', 'application/octet-stream')
-            ctx.body = fs.createReadStream(`/root/ndn-tmp/${afid}.dat`)
+            ctx.body = fs.createReadStream(buffer)
             ctx.status = 200
         } else {
             ctx.body = "file not found"
