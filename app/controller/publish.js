@@ -101,7 +101,7 @@ class PublishController extends Controller {
             if (data.code === 0) {
                 content = data.data.getContent().buf().toString()
                 const obj = JSON.parse(content)
-                total += content
+                total += obj.data.data.toString('utf8')
                 if(obj.end===true||obj.end==='true') break
             } else {
                 ctx.body = "file not found"
