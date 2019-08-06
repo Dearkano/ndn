@@ -31,7 +31,7 @@ class PublishController extends Controller {
         function asyncInterest() {
             return new Promise(function (resolve) {
                 const name = new Name(`/bfs/info/afid/${afid}`);
-                console.log("Express name " + name.toUri());
+                // console.log("Express name " + name.toUri());
                 face.expressInterest(name, (_, data) => resolve({
                     code: 0,
                     data
@@ -83,9 +83,9 @@ class PublishController extends Controller {
         let content = null
 
         async function asyncInterest(n) {
-            console.log('in '+ n)
+           // // console.log('in '+ n)
             return new Promise(function (resolve) {
-                console.log("Express name " + n.toUri());
+                // console.log("Express name " + n.toUri());
                 face.expressInterest(n, (_, data) => resolve({
                     code: 0,
                     data
@@ -99,8 +99,8 @@ class PublishController extends Controller {
         for(let i = 0;;i++){
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
             const data = await asyncInterest(name)
-            console.log('receive an interest')
-            console.log(data)
+            // console.log('receive an interest')
+            // console.log(data)
             if (data.code === 0) {
                 content = data.data.getContent().buf().toString()
                 const obj = JSON.parse(content)
@@ -111,7 +111,7 @@ class PublishController extends Controller {
                 break
             }
         }
-        console.log('out loop')
+        // console.log('out loop')
 
         if(success){
             const buffer = new Buffer(total, 'utf-8')
