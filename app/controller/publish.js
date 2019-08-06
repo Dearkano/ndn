@@ -97,6 +97,7 @@ class PublishController extends Controller {
         const data = await asyncInterest()
         if (data.code === 0) {
             content = data.data.getContent().buf().toString()
+            console.log('receive data = '+ content)
             const buffer = new Buffer(content, 'utf-8')
             const bufferStream = new stream.PassThrough();
             bufferStream.end(buffer);
