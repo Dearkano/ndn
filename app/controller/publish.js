@@ -99,7 +99,7 @@ class PublishController extends Controller {
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
             const data = await asyncInterest(name)
             if (data.code === 0) {
-                content = data.data.getContent().buf().toString()
+                content = data.data.getContent().buf().toString('utf8')
                 const obj = JSON.parse(content)
                 total += obj.data.data.toString('utf8')
                 if(obj.end===true||obj.end==='true') break
