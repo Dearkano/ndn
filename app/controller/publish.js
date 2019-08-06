@@ -100,16 +100,16 @@ class PublishController extends Controller {
             if (data.code === 0) {
                 content = data.data.getContent().buf().toString()
                 const obj = JSON.parse(content)
-                console.log('receive data = '+ content)
                 console.log(obj)
                 console.log(obj.end)
                 total += content
-                if(obj.end) break
+                if(obj.end===true||obj.end==='true') break
             } else {
                 ctx.body = "file not found"
                 ctx.status = 404
             }
         }
+        console.log('out loop')
 
         const buffer = new Buffer(total, 'utf-8')
         const bufferStream = new stream.PassThrough();
