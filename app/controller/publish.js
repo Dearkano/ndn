@@ -6,6 +6,7 @@ const {
     Interest
 } = require('ndn-js')
 const Fiber = require('fibers');
+const fs = require('fs')
 // Silence the warning from Interest wire encode.
 Interest.setDefaultCanBePrefix(true);
 
@@ -93,31 +94,10 @@ class PublishController extends Controller {
             })
         }
         const data = await asyncInterest()
-        let rs = {}
         if (data.code === 0) {
             content = data.data.getContent().buf().toString()
-            const json = JSON.parse(content)
-            let {result, config } = json
-            let arr = result.split(';')
-            for(const item of arr){
-                if(item){
-                    if(item.indexOf('=')!==-1){
-                        const subArr = item.split('=')
-                        rs[subArr[0]] = subArr[1]
-                    }
-                }
-            }
-            config = config.replace('\n', ' ')
-            let arr1 = config.split(' ')
-            for(const item of arr1){
-                if(item){
-                    if(item.indexOf('=')!==-1){
-                        const subArr = item.split('=')
-                        rs[subArr[0]] = subArr[1]
-                    }
-                }
-            }
-            ctx.body = JSON.stringify(rs)
+            fs.writeFileSync(`/root/ndn-tmp/${afid}.dat`, content)
+            ctx.body = fs.createReadStream(`/root/ndn-tmp/${afid}.dat`)
             ctx.status = 200
         } else {
             ctx.body = "file not found"
