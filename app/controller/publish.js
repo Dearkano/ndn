@@ -97,7 +97,7 @@ class PublishController extends Controller {
         const data = await asyncInterest()
         if (data.code === 0) {
             content = data.data.getContent().buf().toString()
-            const buffer = new Buffer(content)
+            const buffer = new Buffer(content, 'utf-8')
             const bufferStream = new stream.PassThrough();
             bufferStream.end(buffer);
             // fs.writeFileSync(`/root/ndn-tmp/${afid}.dat`, content)
