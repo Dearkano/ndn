@@ -82,11 +82,10 @@ class PublishController extends Controller {
         } = ctx.query
         let content = null
 
-        function asyncInterest() {
+        function asyncInterest(n) {
             return new Promise(function (resolve) {
-                const name = new Name(`/bfs/download/afid/${afid}`);
-                console.log("Express name " + name.toUri());
-                face.expressInterest(name, (_, data) => resolve({
+                console.log("Express name " + n.toUri());
+                face.expressInterest(n, (_, data) => resolve({
                     code: 0,
                     data
                 }), () => resolve({
@@ -94,22 +93,31 @@ class PublishController extends Controller {
                 }));
             })
         }
-        const data = await asyncInterest()
-        if (data.code === 0) {
-            content = data.data.getContent().buf().toString()
-            console.log('receive data = '+ content)
-            const buffer = new Buffer(content, 'utf-8')
-            const bufferStream = new stream.PassThrough();
-            bufferStream.end(buffer);
-            // fs.writeFileSync(`/root/ndn-tmp/${afid}.dat`, content)
-            ctx.attachment(`${afid}.txt`)
-            ctx.set('Content-Type', 'application/octet-stream')
-            ctx.body = bufferStream
-            ctx.status = 200
-        } else {
-            ctx.body = "file not found"
-            ctx.status = 404
+        let total = ''
+        for(let i = 0;;i++){
+            const name = new Name(`/bfs/download/afid/${afid}.${i}`);
+            const data = await asyncInterest(name)
+            if (data.code === 0) {
+                content = data.data.getContent().buf().toString()
+                const obj = JSON.parse(content)
+                console.log('receive data = '+ content)
+                console.log(obj)
+                total += content
+                if(obj.end) break
+            } else {
+                ctx.body = "file not found"
+                ctx.status = 404
+            }
         }
+
+        const buffer = new Buffer(total, 'utf-8')
+        const bufferStream = new stream.PassThrough();
+        bufferStream.end(buffer);
+        // fs.writeFileSync(`/root/ndn-tmp/${afid}.dat`, content)
+        ctx.attachment(`${afid}.txt`)
+        ctx.set('Content-Type', 'application/octet-stream')
+        ctx.body = bufferStream
+        ctx.status = 200
     }
 }
 module.exports = PublishController;
