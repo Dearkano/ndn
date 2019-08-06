@@ -83,6 +83,7 @@ class PublishController extends Controller {
         let content = null
 
         async function asyncInterest(n) {
+            console.log('in '+ n)
             return new Promise(function (resolve) {
                 console.log("Express name " + n.toUri());
                 face.expressInterest(n, (_, data) => resolve({
