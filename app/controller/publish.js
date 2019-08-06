@@ -28,7 +28,7 @@ class PublishController extends Controller {
 
         function asyncInterest() {
             return new Promise(function (resolve) {
-                const name = new Name(`/bfs/info/afid=${afid}`);
+                const name = new Name(`/bfs/info/afid#${afid}`);
                 console.log("Express name " + name.toUri());
                 face.expressInterest(name, (_, data) => resolve({
                     code: 0,
@@ -82,7 +82,7 @@ class PublishController extends Controller {
 
         function asyncInterest() {
             return new Promise(function (resolve) {
-                const name = new Name(`/bfs/download/afid=${afid}`);
+                const name = new Name(`/bfs/download/afid#${afid}`);
                 console.log("Express name " + name.toUri());
                 face.expressInterest(name, (_, data) => resolve({
                     code: 0,
