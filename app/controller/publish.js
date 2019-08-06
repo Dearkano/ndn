@@ -98,10 +98,11 @@ class PublishController extends Controller {
         for(let i = 0;;i++){
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
             const data = await asyncInterest(name)
+            console.log('receive an interest')
+            console.log(data)
             if (data.code === 0) {
                 content = data.data.getContent().buf().toString()
                 const obj = JSON.parse(content)
-                console.log(obj)
                 total += obj.data.toString('utf8')
                 if(obj.end===true||obj.end==='true') break
             } else {
