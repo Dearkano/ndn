@@ -105,16 +105,14 @@ class PublishController extends Controller {
 
         // send request to request basic information
         console.log('send pre request')
-        ctx.body="123"
-        return
-        // const name = new Name(`/bfs/pre/afid/${afid}`);
-        // const res = await asyncInterest(name)
-        // if (!res.data) {
-        //     ctx.body = "file not found"
-        //     ctx.status = 404
-        // }
-        // const resStr = res.data.getContent().buf().toString()
-        // const blockNum = JSON.parse(resStr).blockNum
+        const name = new Name(`/bfs/pre/afid/${afid}`);
+        const res = await asyncInterest(name)
+        if (!res.data) {
+            ctx.body = "file not found"
+            ctx.status = 404
+        }
+        const resStr = res.data.getContent().buf().toString()
+        const blockNum = JSON.parse(resStr).blockNum
 
         let total = ''
         let success = true
