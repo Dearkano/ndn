@@ -179,8 +179,15 @@ class PublishController extends Controller {
         const {
             afid
         } = ctx.query
-        ctx.body = timeTable[afid]
-        ctx.status = 200
+        const data = timeTable[afid]
+        if(!data){
+            ctx.status = 404
+        }else{
+            ctx.body = data
+            ctx.status = 200
+        }
+
+
     }
 }
 module.exports = PublishController;
