@@ -126,7 +126,6 @@ class PublishController extends Controller {
             // console.log(data.data.getContent())
             if (data.code === 0) {
                 content = data.data.getContent().buf()
-                console.log('-------------')
                 total = Buffer.concat([total, content])
             } else {
                 success = false
@@ -158,7 +157,6 @@ class PublishController extends Controller {
         // }
         if (success) {
             start = new Date().getTime()
-            console.log('before return ')
             //const buffer = new Buffer(total, 'utf-8')
             const bufferStream = new stream.PassThrough();
             bufferStream.end(total);
