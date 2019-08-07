@@ -116,44 +116,44 @@ class PublishController extends Controller {
 
         let total = ''
         let success = true
-        // for (let i = 0;; i++) {
-        //     const name = new Name(`/bfs/download/afid/${afid}.${i}`);
-        //     const data = await asyncInterest(name)
-        //     // console.log('receive an interest')
-        //     // console.log(data)
-        //     if (data.code === 0) {
-        //         content = data.data.getContent().buf().toString()
-        //         const obj = JSON.parse(content)
-        //         total += obj.data.toString('utf8')
-        //         if (obj.end === true || obj.end === 'true') break
-        //     } else {
-        //         success = false
-        //         break
-        //     }
-        // }
-        // console.log('out loop')
-        const ps = []
-        for (let i = 0; i < 26; i++) {
+        for (let i = 0; i<blockNum ; i++) {
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
-            ps.push(asyncInterest(name))
-        }
-        const res1 = await Promise.all(ps)
-        console.log('loop end')
-        console.log(res1.length)
-        for (const i in res1) {
-            const item = res1[i]
-            if (item.code === 0) {
-                    const obj = JSON.parse(item.data.getContent().buf().toString())
-                    if (obj.data) {
-                        total += obj.data.toString('utf8')
-                    }else{
-                        console.log('obj data = null index = '+i)
-                    }
-            }else{
-                console.log('code = 1 index = '+ i)
+            const data = await asyncInterest(name)
+            // console.log('receive an interest')
+            // console.log(data)
+            if (data.code === 0) {
+                content = data.data.getContent().buf().toString()
+                const obj = JSON.parse(content)
+                total += obj.data.toString('utf8')
+                if (obj.end === true || obj.end === 'true') break
+            } else {
+                success = false
+                break
             }
         }
-        if (true) {
+        console.log('out loop')
+        // const ps = []
+        // for (let i = 0; i < blockNum; i++) {
+        //     const name = new Name(`/bfs/download/afid/${afid}.${i}`);
+        //     ps.push(asyncInterest(name))
+        // }
+        // const res1 = await Promise.all(ps)
+        // console.log('loop end')
+        // console.log(res1.length)
+        // for (const i in res1) {
+        //     const item = res1[i]
+        //     if (item.code === 0) {
+        //             const obj = JSON.parse(item.data.getContent().buf().toString())
+        //             if (obj.data) {
+        //                 total += obj.data.toString('utf8')
+        //             }else{
+        //                 console.log('obj data = null index = '+i)
+        //             }
+        //     }else{
+        //         console.log('code = 1 index = '+ i)
+        //     }
+        // }
+        if (success) {
             console.log('before return ')
             const buffer = new Buffer(total, 'utf-8')
             const bufferStream = new stream.PassThrough();
