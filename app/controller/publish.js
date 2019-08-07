@@ -27,6 +27,7 @@ class PublishController extends Controller {
             afid
         } = ctx.query
         let content = null
+        console.log('get')
 
         function asyncInterest() {
             return new Promise(function (resolve) {
