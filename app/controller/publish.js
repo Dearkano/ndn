@@ -76,7 +76,7 @@ class PublishController extends Controller {
         }
     }
 
-    async downloadIFile(){
+    async downloadIFile() {
         console.log('gogogo')
         this.ctx.body = '21312312'
     }
@@ -105,7 +105,7 @@ class PublishController extends Controller {
         }
 
         // send request to request basic information
-        console.log('send pre request')
+        let start = new Date().getTime()
         const name = new Name(`/bfs/pre/afid/${afid}`);
         const res = await asyncInterest(name)
         if (!res.data) {
@@ -114,10 +114,13 @@ class PublishController extends Controller {
         }
         const resStr = res.data.getContent().buf().toString()
         const blockNum = JSON.parse(resStr).blockNum
+        let end = new Date().getTime()
+        console.log('pre time = ' + (end - start))
 
         let total = new Buffer('', 'utf-8')
         let success = true
-        for (let i = 0; i<blockNum ; i++) {
+        let start = new Date().getTime()
+        for (let i = 0; i < blockNum; i++) {
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
             const data = await asyncInterest(name)
             console.log('receive an interest')
@@ -132,7 +135,8 @@ class PublishController extends Controller {
                 break
             }
         }
-        console.log('out loop')
+        let end = new Date().getTime()
+        console.log('interest time = ' + (end - start))
         // const ps = []
         // for (let i = 0; i < blockNum; i++) {
         //     const name = new Name(`/bfs/download/afid/${afid}.${i}`);
@@ -155,6 +159,7 @@ class PublishController extends Controller {
         //     }
         // }
         if (success) {
+            start = new Date().getTime()
             console.log('before return ')
             //const buffer = new Buffer(total, 'utf-8')
             const bufferStream = new stream.PassThrough();
@@ -164,6 +169,8 @@ class PublishController extends Controller {
             ctx.set('Content-Type', 'application/octet-stream')
             ctx.body = bufferStream
             ctx.status = 200
+            end = new Date().getTime()
+            console.log('transmit time = ' + (end - start))
         } else {
             ctx.body = "file not found"
             ctx.status = 404
