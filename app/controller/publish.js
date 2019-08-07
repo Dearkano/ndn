@@ -123,7 +123,7 @@ class PublishController extends Controller {
             // console.log(data)
             if (data.code === 0) {
                 content = data.data.getContent().buf()
-                console.log(content)
+                console.log(content.toString())
                 total = Buffer.concat([total, content])
             } else {
                 success = false
