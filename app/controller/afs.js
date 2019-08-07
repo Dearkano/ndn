@@ -5,7 +5,7 @@ class AfsController extends Controller {
         const {
             ctx
         } = this
-        const ip = ctx.query.ip
+        const ip = ctx.body.ip
         console.log(ip)
         const data = await this.service.afs.getRNodeInfo(ip)
         ctx.body = data
