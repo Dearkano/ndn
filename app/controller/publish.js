@@ -27,7 +27,6 @@ class PublishController extends Controller {
             afid
         } = ctx.query
         let content = null
-        console.log('get')
 
         function asyncInterest() {
             return new Promise(function (resolve) {
@@ -75,6 +74,11 @@ class PublishController extends Controller {
             ctx.body = "file not found"
             ctx.status = 404
         }
+    }
+
+    async downloadIFile(){
+        console.log('gogogo')
+        this.ctx.body = '21312312'
     }
 
     async downloadFile() {
