@@ -129,11 +129,12 @@ class PublishController extends Controller {
             ps.push(asyncInterest(name))
         }
         const res1 = await Promise.all(ps)
+        console.log(res1.length)
         for (const item of res1) {
             if (item.code === 0) {
                 if(item.data){
                     const obj = JSON.parse(item.data.getContent().buf().toString())
-                    console.log(obj)
+                    //console.log(obj)
                     total += obj.data.toString('utf8')
                 }
             }
