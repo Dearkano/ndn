@@ -5,6 +5,7 @@ class AfsService extends Service {
   async getRNodeInfo(ip) {
     const res = await fetch(ip)
     const text = await res.text()
+    console.log(text)
     return text;
   }
 }
