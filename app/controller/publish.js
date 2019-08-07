@@ -121,7 +121,7 @@ class PublishController extends Controller {
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
             const data = await asyncInterest(name)
             console.log('receive an interest')
-            console.log(interest)
+            console.log(data.interest)
             // console.log(data.data.getContent())
             if (data.code === 0) {
                 content = data.data.getContent().buf()
