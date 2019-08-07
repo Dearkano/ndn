@@ -101,6 +101,7 @@ class PublishController extends Controller {
         // send request to request basic information
         const name = new Name(`/bfs/pre/afid/${afid}`);
         const res = await asyncInterest(name)
+        console.log(res)
         const resStr = res.data.getContent().buf().toString()
         console.log(resStr)
         const blockNum = JSON.parse(resStr).blockNum
