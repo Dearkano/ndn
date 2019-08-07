@@ -45,11 +45,14 @@ class PublishController extends Controller {
         if (data.code === 0) {
             content = data.data.getContent().buf().toString()
             const json = JSON.parse(content)
-            let {result, config } = json
+            let {
+                result,
+                config
+            } = json
             let arr = result.split(';')
-            for(const item of arr){
-                if(item){
-                    if(item.indexOf('=')!==-1){
+            for (const item of arr) {
+                if (item) {
+                    if (item.indexOf('=') !== -1) {
                         const subArr = item.split('=')
                         rs[subArr[0]] = subArr[1]
                     }
@@ -57,9 +60,9 @@ class PublishController extends Controller {
             }
             config = config.replace('\n', ' ')
             let arr1 = config.split(' ')
-            for(const item of arr1){
-                if(item){
-                    if(item.indexOf('=')!==-1){
+            for (const item of arr1) {
+                if (item) {
+                    if (item.indexOf('=') !== -1) {
                         const subArr = item.split('=')
                         rs[subArr[0]] = subArr[1]
                     }
@@ -73,7 +76,7 @@ class PublishController extends Controller {
         }
     }
 
-    async downloadFile(){
+    async downloadFile() {
         const {
             ctx
         } = this
@@ -83,7 +86,7 @@ class PublishController extends Controller {
         let content = null
 
         async function asyncInterest(n) {
-           // // console.log('in '+ n)
+            // // console.log('in '+ n)
             return new Promise(function (resolve) {
                 // console.log("Express name " + n.toUri());
                 face.expressInterest(n, (_, data) => resolve({
@@ -94,26 +97,43 @@ class PublishController extends Controller {
                 }));
             })
         }
+
+        // send request to request basic information
+        const name = new Name(`/bfs/pre/afid/${afid}`);
+        const res = await asyncInterest(name)
+        console.log(res)
+        const blockNum = JSON.parse(res.blockNum)
+
         let total = ''
         let success = true
-        for(let i = 0;;i++){
-            const name = new Name(`/bfs/download/afid/${afid}.${i}`);
-            const data = await asyncInterest(name)
-            // console.log('receive an interest')
-            // console.log(data)
-            if (data.code === 0) {
-                content = data.data.getContent().buf().toString()
-                const obj = JSON.parse(content)
-                total += obj.data.toString('utf8')
-                if(obj.end===true||obj.end==='true') break
-            } else {
-                success= false
-                break
-            }
-        }
+        // for (let i = 0;; i++) {
+        //     const name = new Name(`/bfs/download/afid/${afid}.${i}`);
+        //     const data = await asyncInterest(name)
+        //     // console.log('receive an interest')
+        //     // console.log(data)
+        //     if (data.code === 0) {
+        //         content = data.data.getContent().buf().toString()
+        //         const obj = JSON.parse(content)
+        //         total += obj.data.toString('utf8')
+        //         if (obj.end === true || obj.end === 'true') break
+        //     } else {
+        //         success = false
+        //         break
+        //     }
+        // }
         // console.log('out loop')
-
-        if(success){
+        const ps = []
+        for(let i=0;i<blockNum;i++){
+            const name = new Name(`/bfs/download/afid/${afid}.${i}`);
+            ps.push(asyncInterest(name))
+        }
+        const res1 = await Promise.all(ps)
+        console.log(res1)
+        for(const item of res1){
+           const obj = JSON.parse(item.getContent().buf().toString())
+           total +=  obj.data.toString('utf8')
+        }
+        if (true) {
             const buffer = new Buffer(total, 'utf-8')
             const bufferStream = new stream.PassThrough();
             bufferStream.end(buffer);
@@ -122,7 +142,7 @@ class PublishController extends Controller {
             ctx.set('Content-Type', 'application/octet-stream')
             ctx.body = bufferStream
             ctx.status = 200
-        }else{
+        } else {
             ctx.body = "file not found"
             ctx.status = 404
         }
