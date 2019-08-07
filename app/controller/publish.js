@@ -114,7 +114,7 @@ class PublishController extends Controller {
         const resStr = res.data.getContent().buf().toString()
         const blockNum = JSON.parse(resStr).blockNum
 
-        let total = ''
+        let total = new Buffer('', 'utf-8')
         let success = true
         for (let i = 0; i<blockNum ; i++) {
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
@@ -122,10 +122,9 @@ class PublishController extends Controller {
             // console.log('receive an interest')
             // console.log(data)
             if (data.code === 0) {
-                content = data.data.getContent().buf().toString()
-                const obj = JSON.parse(content)
-                total += obj.data.toString('utf8')
-                if (obj.end === true || obj.end === 'true') break
+                content = data.data.getContent().buf()
+                console.log(content)
+                Buffer.concat([total, content])
             } else {
                 success = false
                 break
@@ -155,9 +154,9 @@ class PublishController extends Controller {
         // }
         if (success) {
             console.log('before return ')
-            const buffer = new Buffer(total, 'utf-8')
+            //const buffer = new Buffer(total, 'utf-8')
             const bufferStream = new stream.PassThrough();
-            bufferStream.end(buffer);
+            bufferStream.end(total);
             // fs.writeFileSync(`/root/ndn-tmp/${afid}.dat`, content)
             ctx.attachment(`${afid}.txt`)
             ctx.set('Content-Type', 'application/octet-stream')
