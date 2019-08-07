@@ -94,9 +94,10 @@ class PublishController extends Controller {
             // // console.log('in '+ n)
             return new Promise(function (resolve) {
                 // console.log("Express name " + n.toUri());
-                face.expressInterest(n, (_, data) => resolve({
+                face.expressInterest(n, (interest, data) => resolve({
                     code: 0,
-                    data
+                    data,
+                    interest
                 }), () => resolve({
                     code: 1
                 }));
@@ -120,11 +121,11 @@ class PublishController extends Controller {
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
             const data = await asyncInterest(name)
             console.log('receive an interest')
-            console.log(data.data.getContent())
+            console.log(interest)
+            // console.log(data.data.getContent())
             if (data.code === 0) {
                 content = data.data.getContent().buf()
                 console.log('-------------')
-                console.log(content.toString())
                 total = Buffer.concat([total, content])
             } else {
                 success = false
