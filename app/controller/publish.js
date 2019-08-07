@@ -134,7 +134,7 @@ class PublishController extends Controller {
             if (item.code === 0) {
                 if(item.data){
                     const obj = JSON.parse(item.data.getContent().buf().toString())
-                    //console.log(obj)
+                    console.log(obj)
                     total += obj.data.toString('utf8')
                 }
             }
