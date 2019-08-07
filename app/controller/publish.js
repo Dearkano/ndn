@@ -119,7 +119,7 @@ class PublishController extends Controller {
 
         let total = new Buffer('', 'utf-8')
         let success = true
-        let start = new Date().getTime()
+        start = new Date().getTime()
         for (let i = 0; i < blockNum; i++) {
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
             const data = await asyncInterest(name)
@@ -135,7 +135,7 @@ class PublishController extends Controller {
                 break
             }
         }
-        let end = new Date().getTime()
+        end = new Date().getTime()
         console.log('interest time = ' + (end - start))
         // const ps = []
         // for (let i = 0; i < blockNum; i++) {
