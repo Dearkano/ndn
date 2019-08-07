@@ -129,6 +129,7 @@ class PublishController extends Controller {
             ps.push(asyncInterest(name))
         }
         const res1 = await Promise.all(ps)
+        console.log('loop end')
         console.log(res1.length)
         for (const item of res1) {
             if (item.code === 0) {
@@ -141,6 +142,7 @@ class PublishController extends Controller {
             }
         }
         if (true) {
+            console.log('before return ')
             const buffer = new Buffer(total, 'utf-8')
             const bufferStream = new stream.PassThrough();
             bufferStream.end(buffer);
