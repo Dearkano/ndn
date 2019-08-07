@@ -101,7 +101,8 @@ class PublishController extends Controller {
         // send request to request basic information
         const name = new Name(`/bfs/pre/afid/${afid}`);
         const res = await asyncInterest(name)
-        const resStr = res.getContent().buf().toString()
+        const resStr = res.data.getContent().buf().toString()
+        console.log(resStr)
         const blockNum = JSON.parse(resStr).blockNum
 
         let total = ''
@@ -130,7 +131,7 @@ class PublishController extends Controller {
         const res1 = await Promise.all(ps)
         console.log(res1)
         for(const item of res1){
-           const obj = JSON.parse(item.getContent().buf().toString())
+           const obj = JSON.parse(item.data.getContent().buf().toString())
            total +=  obj.data.toString('utf8')
         }
         if (true) {
