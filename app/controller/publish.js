@@ -131,9 +131,11 @@ class PublishController extends Controller {
         const res1 = await Promise.all(ps)
         for (const item of res1) {
             if (item.code === 0) {
-                const obj = JSON.parse(item.data.getContent().buf().toString())
-                console.log(obj)
-                total += obj.data.toString('utf8')
+                if(item.data){
+                    const obj = JSON.parse(item.data.getContent().buf().toString())
+                    console.log(obj)
+                    total += obj.data.toString('utf8')
+                }
             }
         }
         if (true) {
