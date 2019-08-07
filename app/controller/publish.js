@@ -14,7 +14,7 @@ Interest.setDefaultCanBePrefix(true);
 var face = new Face(new UnixTransport());
 
 var callbackCount = 0;
-
+const timeTable = {}
 
 
 
@@ -115,8 +115,7 @@ class PublishController extends Controller {
         const resStr = res.data.getContent().buf().toString()
         const blockNum = JSON.parse(resStr).blockNum
         let end = new Date().getTime()
-        console.log('pre time = ' + (end - start))
-
+        const preTime = (end - start)
         let total = new Buffer('', 'utf-8')
         let success = true
         start = new Date().getTime()
@@ -133,7 +132,11 @@ class PublishController extends Controller {
             }
         }
         end = new Date().getTime()
-        console.log('interest time = ' + (end - start))
+        const interestTime = end - start
+        timeTable[afid] = {
+            interestTime,
+            preTime
+        }
         // const ps = []
         // for (let i = 0; i < blockNum; i++) {
         //     const name = new Name(`/bfs/download/afid/${afid}.${i}`);
@@ -156,7 +159,6 @@ class PublishController extends Controller {
         //     }
         // }
         if (success) {
-            start = new Date().getTime()
             //const buffer = new Buffer(total, 'utf-8')
             const bufferStream = new stream.PassThrough();
             bufferStream.end(total);
@@ -165,12 +167,20 @@ class PublishController extends Controller {
             ctx.set('Content-Type', 'application/octet-stream')
             ctx.body = bufferStream
             ctx.status = 200
-            end = new Date().getTime()
-            console.log('transmit time = ' + (end - start))
         } else {
             ctx.body = "file not found"
             ctx.status = 404
         }
+    }
+    async getDownloadInfo() {
+        const {
+            ctx
+        } = this
+        const {
+            afid
+        } = ctx.query
+        ctx.body = timeTable[afid]
+        ctx.status = 200
     }
 }
 module.exports = PublishController;
