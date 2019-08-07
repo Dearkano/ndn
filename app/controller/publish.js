@@ -119,8 +119,8 @@ class PublishController extends Controller {
         for (let i = 0; i<blockNum ; i++) {
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
             const data = await asyncInterest(name)
-            // console.log('receive an interest')
-            // console.log(data)
+            console.log('receive an interest')
+            console.log(data.data.getContent())
             if (data.code === 0) {
                 content = data.data.getContent().buf()
                 console.log('-------------')
