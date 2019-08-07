@@ -124,15 +124,16 @@ class PublishController extends Controller {
         // }
         // console.log('out loop')
         const ps = []
-        for(let i=0;i<blockNum;i++){
+        for (let i = 0; i < blockNum; i++) {
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
             ps.push(asyncInterest(name))
         }
         const res1 = await Promise.all(ps)
-        console.log(res1)
-        for(const item of res1){
-           const obj = JSON.parse(item.data.getContent().buf().toString())
-           total +=  obj.data.toString('utf8')
+        for (const item of res1) {
+            if (item.code === 0) {
+                const obj = JSON.parse(item.data.getContent().buf().toString())
+                total += obj.data.toString('utf8')
+            }
         }
         if (true) {
             const buffer = new Buffer(total, 'utf-8')
