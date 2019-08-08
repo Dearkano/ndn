@@ -59,6 +59,7 @@ class PublishController extends Controller {
                 }
             }
             config = config.replace('\n', ' ')
+            console.log(config)
             let arr1 = config.split(' ')
             for (const item of arr1) {
                 if (item) {
@@ -68,6 +69,7 @@ class PublishController extends Controller {
                     }
                 }
             }
+            console.log(rs)
             ctx.body = JSON.stringify(rs)
             ctx.status = 200
         } else {
