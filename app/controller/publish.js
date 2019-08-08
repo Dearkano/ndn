@@ -19,6 +19,63 @@ const timeTable = {}
 
 
 class PublishController extends Controller {
+    async getFileRecord(){
+        const {
+            ctx
+        } = this
+        const {
+            afid
+        } = ctx.request.body
+        let content = null
+
+        function asyncInterest() {
+            return new Promise(function (resolve) {
+                const name = new Name(`/bfs/info/afid/${afid}`);
+                // console.log("Express name " + name.toUri());
+                face.expressInterest(name, (_, data) => resolve({
+                    code: 0,
+                    data
+                }), () => resolve({
+                    code: 1
+                }));
+            })
+        }
+        const data = await asyncInterest()
+        let rs = {}
+        if (data.code === 0) {
+            content = data.data.getContent().buf().toString()
+            const json = JSON.parse(content)
+            let {
+                result,
+                config
+            } = json
+            let arr = result.split(';')
+            for (const item of arr) {
+                if (item) {
+                    if (item.indexOf('=') !== -1) {
+                        const subArr = item.split('=')
+                        rs[subArr[0]] = subArr[1]
+                    }
+                }
+            }
+            let arr1 = config.split('\n')
+            for (const item of arr1) {
+                if (item) {
+                    if (item.indexOf('=') !== -1) {
+                        const subArr = item.split('=')
+                        rs[subArr[0]] = subArr[1]
+                    }
+                }
+            }
+            console.log(rs)
+            ctx.body = JSON.stringify(rs)
+            ctx.status = 200
+        } else {
+            ctx.body = "file not found"
+            ctx.status = 404
+        }
+    }
+
     async getFileInfo() {
         const {
             ctx
@@ -58,14 +115,11 @@ class PublishController extends Controller {
                     }
                 }
             }
-            console.log(config)
             let arr1 = config.split('\n')
-            console.log(arr1)
             for (const item of arr1) {
                 if (item) {
                     if (item.indexOf('=') !== -1) {
                         const subArr = item.split('=')
-                        console.log(subArr)
                         rs[subArr[0]] = subArr[1]
                     }
                 }
