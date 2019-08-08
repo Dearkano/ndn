@@ -19,7 +19,7 @@ const timeTable = {}
 
 
 class PublishController extends Controller {
-    async getFileRecord(){
+    async getFileRecord() {
         const {
             ctx
         } = this
@@ -67,7 +67,7 @@ class PublishController extends Controller {
                     }
                 }
             }
-            
+
             ctx.body = JSON.stringify(rs)
             ctx.status = 200
         } else {
@@ -84,7 +84,7 @@ class PublishController extends Controller {
             afid
         } = ctx.query
         let content = null
-        console.log('query '+afid)
+        console.log('query ' + afid)
 
         function asyncInterest() {
             return new Promise(function (resolve) {
@@ -125,7 +125,7 @@ class PublishController extends Controller {
                     }
                 }
             }
-          
+
             ctx.body = JSON.stringify(rs)
             ctx.status = 200
         } else {
@@ -172,14 +172,15 @@ class PublishController extends Controller {
         }
         const resStr = res.data.getContent().buf().toString()
         const blockNum = JSON.parse(resStr).blockNum
-        console.log('receive blocknum = '+blockNum)
+        console.log('receive blocknum = ' + blockNum)
         let end = new Date().getTime()
         const preTime = (end - start)
         let total = new Buffer('', 'utf-8')
         let success = true
         start = new Date().getTime()
-        console.log('begin send download interest')
+
         for (let i = 0; i < blockNum; i++) {
+            console.log('begin send download interest num = ' + i)
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
             const data = await asyncInterest(name)
             // console.log(data.data.getContent())
@@ -240,9 +241,9 @@ class PublishController extends Controller {
             afid
         } = ctx.query
         const data = timeTable[afid]
-        if(!data){
+        if (!data) {
             ctx.status = 404
-        }else{
+        } else {
             ctx.body = data
             ctx.status = 200
         }
