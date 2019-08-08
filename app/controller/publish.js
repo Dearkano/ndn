@@ -67,7 +67,7 @@ class PublishController extends Controller {
                     }
                 }
             }
-            console.log(rs)
+            
             ctx.body = JSON.stringify(rs)
             ctx.status = 200
         } else {
@@ -124,7 +124,7 @@ class PublishController extends Controller {
                     }
                 }
             }
-            console.log(rs)
+          
             ctx.body = JSON.stringify(rs)
             ctx.status = 200
         } else {
@@ -134,7 +134,6 @@ class PublishController extends Controller {
     }
 
     async downloadIFile() {
-        console.log('gogogo')
         this.ctx.body = '21312312'
     }
 
@@ -165,7 +164,6 @@ class PublishController extends Controller {
         let start = new Date().getTime()
         const name = new Name(`/bfs/pre/afid/${afid}`);
         const res = await asyncInterest(name)
-        console.log(res)
         if (!res.data) {
             ctx.body = "file not found"
             ctx.status = 404
