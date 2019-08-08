@@ -4,7 +4,7 @@ const {
     Name,
     UnixTransport,
     Interest
-} = require('ndn-js')
+} = require('ndn-js-sdk')
 const Fiber = require('fibers');
 const fs = require('fs')
 const stream = require('stream');
