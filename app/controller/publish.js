@@ -108,9 +108,11 @@ class PublishController extends Controller {
         let start = new Date().getTime()
         const name = new Name(`/bfs/pre/afid/${afid}`);
         const res = await asyncInterest(name)
+        console.log(res)
         if (!res.data) {
             ctx.body = "file not found"
             ctx.status = 404
+            return
         }
         const resStr = res.data.getContent().buf().toString()
         const blockNum = JSON.parse(resStr).blockNum
