@@ -58,9 +58,8 @@ class PublishController extends Controller {
                     }
                 }
             }
-            config = config.replace('\n', ' ')
             console.log(config)
-            let arr1 = config.split(' ')
+            let arr1 = config.split('\n')
             console.log(arr1)
             for (const item of arr1) {
                 if (item) {
