@@ -172,11 +172,13 @@ class PublishController extends Controller {
         }
         const resStr = res.data.getContent().buf().toString()
         const blockNum = JSON.parse(resStr).blockNum
+        console.log('receive blocknum = '+blockNum)
         let end = new Date().getTime()
         const preTime = (end - start)
         let total = new Buffer('', 'utf-8')
         let success = true
         start = new Date().getTime()
+        console.log('begin send download interest')
         for (let i = 0; i < blockNum; i++) {
             const name = new Name(`/bfs/download/afid/${afid}.${i}`);
             const data = await asyncInterest(name)
