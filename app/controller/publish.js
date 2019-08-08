@@ -66,6 +66,7 @@ class PublishController extends Controller {
                 if (item) {
                     if (item.indexOf('=') !== -1) {
                         const subArr = item.split('=')
+                        console.log(subArr)
                         rs[subArr[0]] = subArr[1]
                     }
                 }
