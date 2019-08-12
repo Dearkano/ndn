@@ -5,13 +5,13 @@
  */
 module.exports = app => {
   const { route, router, controller } = app.io;
-  router.get('/', controller.home.index);
-  router.get('/getFileInfo', controller.publish.getFileInfo);
-  router.get('/download', controller.publish.downloadFile);
-  router.get('/downloadFile', controller.publish.downloadIFile);
-  router.get('/getDownloadInfo', controller.publish.getDownloadInfo);
-  router.post('/getRNodeInfo', controller.afs.getRNodeInfo)
-  router.post('/file_record/afid', controller.publish.getFileRecord)
+//   router.get('/', controller.home.index);
+//   router.get('/getFileInfo', controller.publish.getFileInfo);
+//   router.get('/download', controller.publish.downloadFile);
+//   router.get('/downloadFile', controller.publish.downloadIFile);
+//   router.get('/getDownloadInfo', controller.publish.getDownloadInfo);
+//   router.post('/getRNodeInfo', controller.afs.getRNodeInfo)
+//   router.post('/file_record/afid', controller.publish.getFileRecord)
   route('/ping', controller.chat.ping)
   route('disconnect', app.io.controller.chat.disconnect);
 };
