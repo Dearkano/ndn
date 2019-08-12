@@ -13,5 +13,5 @@ module.exports = app => {
 //   router.post('/getRNodeInfo', controller.afs.getRNodeInfo)
 //   router.post('/file_record/afid', controller.publish.getFileRecord)
   route('/ping', controller.chat.ping)
-  route('disconnect', app.io.controller.chat.disconnect);
+  route('/disconnect', app.io.controller.chat.disconnect);
 };
