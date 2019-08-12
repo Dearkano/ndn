@@ -5,7 +5,6 @@
  */
 module.exports = app => {
     const {
-        route,
         controller
     } = app.io;
     const {
