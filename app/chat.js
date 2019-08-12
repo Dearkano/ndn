@@ -53,4 +53,18 @@ export default class {
         var chatPrefixSize = new Name(this.chatPrefix).size();
         var seq = parseInt(interest.getName().get(chatPrefixSize + 1).toEscapedString());
     }
+
+    expressInterest = (name) => {
+        function asyncInterest(name) {
+            return new Promise(function (resolve) {
+                // console.log("Express name " + name.toUri());
+                face.expressInterest(name, (_, data) => resolve({
+                    code: 0,
+                    data
+                }), () => resolve({
+                    code: 1
+                }));
+            })
+        }
+    }
 }
