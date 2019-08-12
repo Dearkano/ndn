@@ -4,11 +4,10 @@
  * @param {Egg.Application} app - egg application
  */
 module.exports = app => {
+
     const {
+        router,
         controller
-    } = app.io;
-    const {
-        router
     } = app
     router.get('/', controller.home.index);
     router.get('/getFileInfo', controller.publish.getFileInfo);
