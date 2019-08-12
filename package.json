@@ -20,15 +20,17 @@
     "egg-bin": "^4.11.0",
     "egg-ci": "^1.11.0",
     "egg-mock": "^3.21.0",
-    "egg-cors": "^2.2.0"
+    "egg-cors": "^2.2.0",
+    "egg-socket.io":"^4.1.6",
+    "egg-session":"^3.1.0"
   },
   "engines": {
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-ndn-server",
+    "start": "egg-scripts start --daemon --title=egg-server-ndn-server --sticky",
     "stop": "egg-scripts stop --title=egg-server-ndn-server",
-    "dev": "egg-bin dev",
+    "dev": "egg-bin dev --sticky",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",

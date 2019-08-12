@@ -34,6 +34,19 @@ module.exports = appInfo => {
         origin: '*',
         allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
     };
+    config.io = {
+        init: { }, // passed to engine.io
+        namespace: {
+          '/': {
+            connectionMiddleware: ['auth'],
+            packetMiddleware: ['filter'],
+          },
+        },
+        redis: {
+          host: '127.0.0.1',
+          port: 6379
+        }
+      };
     return {
         ...config,
         ...userConfig,
