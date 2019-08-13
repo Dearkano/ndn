@@ -161,9 +161,9 @@ class PublishController extends Controller {
             })
         }
         const data = await asyncInterest()
-        console.log(data.getContent().buf().toString())
+        console.log(data.data.getContent().buf().toString())
         ctx.body = {
-            expired_time: data.getContent().buf().toString()
+            expired_time: data.data.getContent().buf().toString()
         }
         ctx.status = 200
     }
