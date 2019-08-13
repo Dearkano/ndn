@@ -11,6 +11,7 @@ module.exports = app => {
     } = app
     router.get('/', controller.home.index);
     router.get('/getFileInfo', controller.publish.getFileInfo);
+    router.get('/getFileParameter', controller.publish.getFileParameter);
     router.get('/download', controller.publish.downloadFile);
     router.get('/downloadFile', controller.publish.downloadIFile);
     router.get('/getDownloadInfo', controller.publish.getDownloadInfo);

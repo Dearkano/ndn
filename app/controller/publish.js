@@ -138,6 +138,34 @@ class PublishController extends Controller {
         this.ctx.body = '21312312'
     }
 
+    async getFileParameter(){
+        const {
+            ctx
+        } = this
+        const {
+            afid
+        } = ctx.query
+        let content = null
+        console.log('query ' + afid)
+
+        function asyncInterest() {
+            return new Promise(function (resolve) {
+                const name = new Name(`/bfs/parameter/afid/${afid}`);
+                // console.log("Express name " + name.toUri());
+                face.expressInterest(name, (_, data) => resolve({
+                    code: 0,
+                    data
+                }), () => resolve({
+                    code: 1
+                }));
+            })
+        }
+        const data = await asyncInterest()
+        console.log(data)
+        ctx.body = data
+        ctx.status = 200
+    }
+
     async downloadFile() {
         const {
             ctx
@@ -192,6 +220,7 @@ class PublishController extends Controller {
                 break
             }
         }
+
         end = new Date().getTime()
         const interestTime = end - start
         timeTable[afid] = {
