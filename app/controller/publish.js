@@ -138,7 +138,7 @@ class PublishController extends Controller {
         this.ctx.body = '21312312'
     }
 
-    async getFileParameter(){
+    async getFileParameter() {
         const {
             ctx
         } = this
@@ -161,8 +161,10 @@ class PublishController extends Controller {
             })
         }
         const data = await asyncInterest()
-        console.log(data)
-        ctx.body = data
+        console.log(data.getContent().buf().toString())
+        ctx.body = {
+            expired_time: data.getContent().buf().toString()
+        }
         ctx.status = 200
     }
 
