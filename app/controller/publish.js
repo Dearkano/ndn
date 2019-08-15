@@ -164,6 +164,7 @@ class PublishController extends Controller {
         content = JSON.parse(data.data.getContent().buf().toString())
         console.log(`${__dirname}/config.json`)
         const rs = fs.readFileSync(`${__dirname}/config.json`)
+        console.log(rs)
         const config = JSON.parse(rs)
         const d = {
             ...content,
