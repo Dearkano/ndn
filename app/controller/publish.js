@@ -161,7 +161,7 @@ class PublishController extends Controller {
             })
         }
         const data = await asyncInterest()
-        console.log(data)
+        console.log(data.data.getContent().buf().toString())
         content = JSON.parse(data.data.getContent().buf().toString())
         console.log(`${__dirname}/config.json`)
         const rs = fs.readFileSync(`${__dirname}/config.json`)
