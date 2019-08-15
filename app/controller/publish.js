@@ -162,7 +162,7 @@ class PublishController extends Controller {
         }
         const data = await asyncInterest()
         content  = data.data.getContent().buf().toString()
-
+        console.log(content)
         ctx.body = JSON.parse(content)
         ctx.status = 200
     }
