@@ -17,3 +17,4 @@ Named-data networking is a proposed Future Internet architecture inspired by yea
 
 In NDN-AFS project, we use NDN primarily to replace tracking node whose function is mainly focused on searching the Rn where the searching target locates. We build the network among the Rns. Once the request arrives in the root node, it will be multicast to other rnodes according to the topology. Rn will find the file's information, includes whether the file exists, or recover and deliver the file back. In a wider range, a network among the root nodes and a http server is built. Send a request to global server and the interest will be mutlicast to the root nodes. Then the root nodes continuely deliver the interests and once get the result, i.e. expired time and cluster name, the data packet can be sent back using the former route.
 
+![](./images/topology.png)
