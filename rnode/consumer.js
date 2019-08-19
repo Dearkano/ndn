@@ -7,7 +7,7 @@ const {
 } = require('ndn-js-sdk')
 
 var face = new Face(new UnixTransport());
-const baseName = '/chat'
+const baseName = ''
 Interest.setDefaultCanBePrefix(true);
 function onTimeout(interest) {
     console.log('timed out')
