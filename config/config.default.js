@@ -43,13 +43,13 @@
                 },
             }
         };
-        config.cluster = {
-            listen: {
-                path: '',
-                port: 10010,
-                hostname: '0.0.0.0',
-            }
-        };
+        // config.cluster = {
+        //     listen: {
+        //         path: '',
+        //         port: 10010,
+        //         hostname: '0.0.0.0',
+        //     }
+        // };
         return {
             ...config,
             ...userConfig,
