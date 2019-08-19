@@ -8,18 +8,18 @@
   },
   "dependencies": {
     "egg": "^2.15.1",
+    "egg-ci": "^1.11.0",
+    "egg-core": "^4.17.3",
+    "egg-cors": "^2.2.0",
+    "egg-mock": "^3.21.0",
     "egg-scripts": "^2.11.0",
-    "egg-core":"^4.17.3",
+    "egg-session": "^3.1.0",
+    "egg-socket.io": "^4.1.6",
     "fibers": "^4.0.1",
     "ndn-js-sdk": "^0.19.0",
-    "node-fetch":"^2.6.0",
-    "socket.io-client": "^2.2.0",
-    "egg-ci": "^1.11.0",
-    "egg-mock": "^3.21.0",
-    "egg-cors": "^2.2.0",
-    "egg-socket.io":"^4.1.6",
-    "egg-session":"^3.1.0",
-    "node-exec":"^0.1.1"
+    "node-exec": "^0.1.1",
+    "node-fetch": "^2.6.0",
+    "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",
@@ -30,9 +30,9 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-ndn-server",
+    "start": "egg-scripts start --daemon --title=egg-server-ndn-server --sticky",
     "stop": "egg-scripts stop --title=egg-server-ndn-server",
-    "dev": "egg-bin dev",
+    "dev": "egg-bin dev --sticky",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
