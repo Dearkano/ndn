@@ -18,7 +18,8 @@
     "egg-mock": "^3.21.0",
     "egg-cors": "^2.2.0",
     "egg-socket.io":"^4.1.6",
-    "egg-session":"^3.1.0"
+    "egg-session":"^3.1.0",
+    "node-exec":"^0.1.1"
   },
   "devDependencies": {
     "autod": "^3.0.1",
