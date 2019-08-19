@@ -22,7 +22,7 @@ function onData(interest, content, T0) {
 function onNack(interest) {
     console.log('nack...')
 }
-r
+
 function fetch(name) {
    // for(const i of [1,2,3,4,5]){
         const nameUri = `${name}`
