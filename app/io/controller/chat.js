@@ -15,8 +15,14 @@ class ChatController extends Controller {
         } = this
         const str = ctx.args[0];
         const pkt = JSON.parse(str)
-        await this.service.chat.send(pkt)
-        ctx.status = 200
+        const res = await this.service.chat.send(pkt)
+        if (!res.data) {
+            ctx.body = "file not found"
+            ctx.status = 404
+            return
+        }
+        const resStr = res.data.getContent().buf().toString()
+        this.ctx.socket.emit('res', resStr);
     }
 
     async index() {
