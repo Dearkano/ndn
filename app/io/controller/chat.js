@@ -25,7 +25,7 @@ class ChatController extends Controller {
         const resStr = res.data.getContent().buf().toString()
         console.log(resStr)
         this.ctx.socket.emit('res', '55555');
-        this.ctx.socket.emit('res', resStr);
+        this.ctx.socket.emit('res', JSON.stringify(resStr));
     }
 
     async index() {
