@@ -33,6 +33,8 @@ const fetch = require('node-fetch')
 const {
     resolve
 } = require('path')
+var io = require('socket.io-emitter')({ host: '127.0.0.1', port: 6379 });
+
 
 const DEFAULT_RSA_PUBLIC_KEY_DER = new Buffer([
     0x30, 0x82, 0x01, 0x22, 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01,
@@ -162,7 +164,7 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         receiverInfo,
         data
     } = obj
-    this.app.ctx.socket.emit('res', data)
+    io.emit('broadcast', data);
 
     data.setContent('ok');
     that.keyChain.sign(data);
@@ -178,7 +180,7 @@ Echo.prototype.onRegisterFailed = function (prefix) {
     this.face.close(); // This will cause the script to quit.
 };
 
-module.exports =  function (app) {
+module.exports = function (app) {
 
     // Connect to the local forwarder with a Unix socket.
     const face = new Face(new UnixTransport());
