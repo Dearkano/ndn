@@ -30,7 +30,9 @@ const fs = require('fs')
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const fetch = require('node-fetch')
-const {resolve} = require('path')
+const {
+    resolve
+} = require('path')
 
 const DEFAULT_RSA_PUBLIC_KEY_DER = new Buffer([
     0x30, 0x82, 0x01, 0x22, 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01,
@@ -139,158 +141,34 @@ const Echo = function Echo(keyChain, face) {
     this.keyChain = keyChain;
     this.face = face;
 };
-let PIT = []
-const BufferTable = {}
 
-function distinctArr(arr) {
-    arr = arr.sort()
-    let result = [arr[0]]
+const connectTable = {}
 
-    for (let i = 1, len = arr.length; i < len; i++) {
-        arr[i] !== arr[i - 1] && result.push(arr[i])
-    }
-    return result
-}
 Echo.prototype.onInterest = async function (prefix, interest, face, interestFilterId, filter) {
     //console.log('---------------PIT:------------')
     //console.log(PIT)
     // Make and sign a Data packet.
     const that = this
-    const data = new Data(interest.getName());
-    // info request : /bfs/info/afid=xxxxx
+    // info request : /chat/cluster/afid/data
     const str = interest.getName().toUri()
     console.log(str)
-    let blockId = 0
-    let afid = str.indexOf('/afid/') === -1 ? '' : (str.split('/afid/'))[1]
-    if (afid.indexOf('.') !== -1) {
-        blockId = parseInt((afid.split('.'))[1])
-        afid = (afid.split('.'))[0]
+    const dataArr = str.split('/')
+    const cluster = dataArr[2]
+    const obj = JSON.parse(dataArr[4])
+    const {
+        senderInfo,
+        receiverInfo,
+        data
+    } = obj
+    app.ctx.socket.emit('res', data)
+
+    data.setContent('ok');
+    that.keyChain.sign(data);
+    try {
+        face.putData(data);
+    } catch (e) {
+        console.log(e.toString());
     }
-    const cmd = `cd /aos/ks/afs_1e/;\
-    ./afs-x64 \";_f=query;afid=${afid};\";`
-    const out = await exec(cmd)
-    const res = out.stdout
-    if (res.indexOf('is_exist=true') === -1) {
-        return
-    }
-
-    // ...
-
-    if ((str.split('/'))[2] === 'info') {
-        let obj = {}
-        const ini = fs.readFileSync('/aos/afs/afs.ini', 'utf8')
-        obj.result = res
-        obj.config = ini
-        data.setContent(JSON.stringify(obj));
-        that.keyChain.sign(data);
-
-        try {
-            face.putData(data);
-        } catch (e) {
-            console.log(e.toString());
-        }
-    } else if ((str.split('/'))[2] === 'pre') {
-        console.log('pre request :' + afid)
-        // if (!PIT.includes(afid)) {
-        PIT.push(afid)
-        PIT = distinctArr(PIT)
-        const cmd1 = `
-            cd /aos/ks/afs_1e/;\./afs-x64 ";_f=download;afid=${afid};local_file=/root/${afid}.dat;"`
-        console.log('begin download')
-        await exec(cmd1)
-        console.log('download end')
-        let arr = []
-        const file = fs.createReadStream(`/root/${afid}.dat`, {
-            highWaterMark: 8 * 1024
-        })
-        file.setEncoding('utf-8')
-        // const ini = fs.readFileSync('/aos/afs/afs.ini', 'utf8')
-        file.on('data', v => {
-            arr.push(v)
-        })
-        file.on('end', () => {
-            BufferTable[afid] = arr
-            console.log('end')
-            console.log(arr.length)
-            data.setContent(JSON.stringify({
-                blockNum: arr.length
-            }));
-            that.keyChain.sign(data);
-            try {
-                face.putData(data);
-            } catch (e) {
-                console.log(e.toString());
-            }
-        })
-        // } else {
-        //     console.log('pit includes')
-        //     const arr = BufferTable[afid]
-        //     data.setContent(JSON.stringify({
-        //         blockNum: arr.length
-        //     }))
-        //     that.keyChain.sign(data);
-        //     try {
-        //         face.putData(data);
-        //     } catch (e) {
-        //         console.log(e.toString());
-        //     }
-        // }
-    } else if ((str.split('/'))[2] === 'download') {
-        console.log('download block ' + blockId)
-        const arr = BufferTable[afid]
-        if (!arr) {
-            console.log('buffer table does not contain this afid, blockid = ' + blockId)
-            return
-        }
-        const end = arr.length === blockId + 1
-        if (end) {
-            console.log('end')
-            const index = PIT.indexOf(afid);
-            if (index > -1) {
-                PIT.splice(index, 1);
-                const rmcmd = `rm -rf /root/${afid}.dat`
-                BufferTable[afid] = null
-                exec(rmcmd)
-            }
-        }
-        console.log('data len = ' + arr[blockId].length)
-        data.setContent(arr[blockId]);
-        that.keyChain.sign(data);
-        try {
-            face.putData(data);
-        } catch (e) {
-            console.log(e.toString());
-        }
-
-    } else if ((str.split('/'))[2] === 'parameter') {
-        console.log('parameter request :' + afid)
-        const cmd2 = `
-            cd /aos/ks/afs_1e/;\./afs-x64 ";_f=read_parameter;afid=${afid};parameter_name=time_stamp_expired;"`
-            const out = await exec(cmd2)
-            const res = out.stdout
-            console.log(`${__dirname}/config.json`)
-            const rs = fs.readFileSync(`${__dirname}/config.json`)
-            const config = JSON.parse(rs)
-
-            if(res.indexOf('_r=true')!==-1){
-                const arr = res.split('parameter_value=')
-                const time = (arr[1].split(';'))[0]
-                data.setContent(JSON.stringify({
-                    expired_time: time,
-                    ...config
-                }));
-                that.keyChain.sign(data);
-                try {
-                    face.putData(data);
-                } catch (e) {
-                    console.log(e.toString());
-                }
-            }else{
-                return
-            }
-    }
-
-
 };
 
 Echo.prototype.onRegisterFailed = function (prefix) {
@@ -298,7 +176,7 @@ Echo.prototype.onRegisterFailed = function (prefix) {
     this.face.close(); // This will cause the script to quit.
 };
 
-function main() {
+export default function (app) {
 
     // Connect to the local forwarder with a Unix socket.
     const face = new Face(new UnixTransport());
@@ -315,9 +193,8 @@ function main() {
     face.setCommandSigningInfo(keyChain, keyChain.getDefaultCertificateName());
 
     const echo = new Echo(keyChain, face);
+    echo.app = app
     const prefix = new Name("/bfs");
     console.log("Register prefix " + prefix.toUri());
     face.registerPrefix(prefix, echo.onInterest.bind(echo), echo.onRegisterFailed.bind(echo));
 }
-
-main();

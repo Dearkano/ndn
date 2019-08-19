@@ -14,11 +14,8 @@ class ChatController extends Controller {
             ctx
         } = this
         const str = ctx.args[0];
-        const {
-            receiver,
-            data
-        } = JSON.parse(str)
-        await this.service.chat.send(receiver, data)
+        const pkt = JSON.parse(str)
+        await this.service.chat.send(pkt)
         ctx.status = 200
     }
 

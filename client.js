@@ -1,13 +1,14 @@
 'use strict';
 
 // or http://127.0.0.1:7001/chat
-const socket = require('socket.io-client')('http://47.92.244.235:10010');
+const socket = require('socket.io-client')(`http://${process.argv[2]}`);
 
 socket.on('connect', () => {
   console.log('connect!');
   const data = {
-      receiver: 'Steven',
-      data: 'hello, there'
+      sender: process.argv[3],
+      receiver: process.argv[4],
+      data: `Hello, ${process.argv[4]}, I am ${process.argv[3]}`
   }
   socket.emit('chat', JSON.stringify(data));
 });

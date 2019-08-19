@@ -8,9 +8,10 @@ const fetch = require('node-fetch')
 const Service = require('egg').Service;
 Interest.setDefaultCanBePrefix(true);
 const face = new Face(new UnixTransport());
-function asyncInterest(receiver, data) {
+function asyncInterest(cluster, pkt) {
     return new Promise(function (resolve) {
-        const name = new Name(`/bfs/chat/${receiver}/afid/${data}`);
+        const d = JSON.stringify(pkt)
+        const name = new Name(`/chat/${cluster}/afid/${d}`);
         // console.log("Express name " + name.toUri());
         face.expressInterest(name, (_, data) => resolve({
             code: 0,
@@ -21,9 +22,9 @@ function asyncInterest(receiver, data) {
     })
 }
 class ChatService extends Service {
-    async send(receiver, data) {
+    async send(pkt) {
       console.log('service send data')
-      await asyncInterest(receiver, data)
+      await asyncInterest(this.cluster, pkt)
     }
   }
   
