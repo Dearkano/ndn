@@ -165,11 +165,11 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         data
     } = obj
     io.emit('broadcast', data);
-
-    data.setContent('ok');
-    that.keyChain.sign(data);
+    const data1 = new Data(interest.getName());
+    data1.setContent('ok');
+    that.keyChain.sign(data1);
     try {
-        face.putData(data);
+        face.putData(data1);
     } catch (e) {
         console.log(e.toString());
     }
