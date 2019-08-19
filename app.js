@@ -1,4 +1,4 @@
-const RNStart = require('./rnode')
+const RNStart  = require('./ndn')
 const fs = require('fs')
 module.exports = app => {
     app.beforeStart(async () => {
