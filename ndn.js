@@ -194,7 +194,7 @@ module.exports =  function (app) {
 
     const echo = new Echo(keyChain, face);
     echo.app = app
-    const prefix = new Name("/bfs");
+    const prefix = new Name("/chat");
     console.log("Register prefix " + prefix.toUri());
     face.registerPrefix(prefix, echo.onInterest.bind(echo), echo.onRegisterFailed.bind(echo));
 }
