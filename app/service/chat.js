@@ -25,7 +25,7 @@ module.exports = app => {
     class ChatService extends app.Service {
         async send(pkt) {
             console.log('service send data')
-            await asyncInterest(app.cluster, pkt)
+            return await asyncInterest(app.cluster, pkt)
         }
     }
     return ChatService
