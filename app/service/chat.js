@@ -4,10 +4,9 @@ const {
     UnixTransport,
     Interest
 } = require('ndn-js-sdk')
-const fetch = require('node-fetch')
-const Service = require('egg').Service;
 Interest.setDefaultCanBePrefix(true);
 const face = new Face(new UnixTransport());
+
 function asyncInterest(cluster, pkt) {
     return new Promise(function (resolve) {
         const d = JSON.stringify(pkt)
@@ -21,11 +20,13 @@ function asyncInterest(cluster, pkt) {
         }));
     })
 }
-class ChatService extends Service {
-    async send(pkt) {
-      console.log('service send data')
-      await asyncInterest(this.cluster, pkt)
+
+module.exports = app => {
+    class ChatService extends app.Service {
+        async send(pkt) {
+            console.log('service send data')
+            await asyncInterest(app.cluster, pkt)
+        }
     }
-  }
-  
-  module.exports = ChatService;
+    return ChatService
+}
