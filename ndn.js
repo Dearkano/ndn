@@ -176,7 +176,7 @@ Echo.prototype.onRegisterFailed = function (prefix) {
     this.face.close(); // This will cause the script to quit.
 };
 
-export default function (app) {
+module.exports =  function (app) {
 
     // Connect to the local forwarder with a Unix socket.
     const face = new Face(new UnixTransport());
