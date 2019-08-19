@@ -16,13 +16,13 @@
  * A copy of the GNU Lesser General Public License is in the file COPYING.
  */
 
-var Face = require('../..').Face;
-var Name = require('../..').Name;
-var Data = require('../..').Data;
-var Blob = require('../..').Blob;
-var UnixTransport = require('../..').UnixTransport;
-var SafeBag = require('../..').SafeBag;
-var KeyChain = require('../..').KeyChain;
+var Face = require('ndn-js-sdk').Face;
+var Name = require('ndn-js-sdk').Name;
+var Data = require('ndn-js-sdk').Data;
+var Blob = require('ndn-js-sdk').Blob;
+var UnixTransport = require('ndn-js-sdk').UnixTransport;
+var SafeBag = require('ndn-js-sdk').SafeBag;
+var KeyChain = require('ndn-js-sdk').KeyChain;
 
 var DEFAULT_RSA_PUBLIC_KEY_DER = new Buffer([
     0x30, 0x82, 0x01, 0x22, 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01,
