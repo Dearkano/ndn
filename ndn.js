@@ -166,7 +166,7 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
     } = obj
     io.emit('broadcast', data);
     const data1 = new Data(interest.getName());
-    data1.setContent('ok');
+    data1.setContent(data);
     that.keyChain.sign(data1);
     try {
         face.putData(data1);

@@ -23,8 +23,6 @@ class ChatController extends Controller {
             return
         }
         const resStr = res.data.getContent().buf().toString()
-        console.log('---')
-        console.log(resStr)
         this.ctx.socket.emit('res', '55555');
         this.ctx.socket.emit('res', JSON.stringify(resStr));
     }
