@@ -7,7 +7,6 @@ const {
 } = require('ndn-js-sdk')
 
 var face = new Face(new UnixTransport());
-const baseName = ''
 Interest.setDefaultCanBePrefix(true);
 function onTimeout(interest) {
     console.log('timed out')
@@ -23,10 +22,10 @@ function onData(interest, content, T0) {
 function onNack(interest) {
     console.log('nack...')
 }
-
+r
 function fetch(name) {
    // for(const i of [1,2,3,4,5]){
-        const nameUri = `${baseName}/${name}`
+        const nameUri = `${name}`
         var interest = new Interest(new Name(nameUri))
         face.expressInterest(interest, onData, onTimeout, onNack);
    // }
