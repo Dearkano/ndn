@@ -5,7 +5,11 @@ const socket = require('socket.io-client')('http://47.92.244.235:10010');
 
 socket.on('connect', () => {
   console.log('connect!');
-  socket.emit('chat', 'hello world!');
+  const data = {
+      receiver: 'Steven',
+      data: 'hello, there'
+  }
+  socket.emit('chat', JSON.stringify(data));
 });
 
 socket.on('res', msg => {

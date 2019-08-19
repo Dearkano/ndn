@@ -302,6 +302,7 @@ function main() {
 
     // Connect to the local forwarder with a Unix socket.
     const face = new Face(new UnixTransport());
+    console.log(__dirname)
 
     // For now, when setting face.setCommandSigningInfo, use a key chain with
     //   a default private key instead of the system default key chain. This
