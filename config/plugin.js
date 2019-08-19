@@ -14,3 +14,8 @@ exports.session = {
     enable: true,
     package: 'egg-session'
 }
+
+exports.redis = {
+    enable: true,
+    package: 'egg-redis',
+};
