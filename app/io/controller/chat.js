@@ -13,10 +13,11 @@ class ChatController extends Controller {
         const {
             ctx
         } = this
+        const str = ctx.args[0];
         const {
             receiver,
             data
-        } = ctx.request.body
+        } = JSON.parse(str)
         await this.service.chat.send(receiver, data)
         ctx.status = 200
     }
