@@ -162,7 +162,7 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         receiverInfo,
         data
     } = obj
-    app.ctx.socket.emit('res', data)
+    this.app.ctx.socket.emit('res', data)
 
     data.setContent('ok');
     that.keyChain.sign(data);
