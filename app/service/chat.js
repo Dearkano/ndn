@@ -27,6 +27,10 @@ module.exports = app => {
             console.log('service send data')
             return await asyncInterest(app.cluster, pkt)
         }
+        async reply(msg) {
+            console.log(' in service')
+            this.ctx.socket.emit('res', msg)
+        }
     }
     return ChatService
 }
