@@ -7,7 +7,7 @@ module.exports = app => {
             helper,
             service
         } = ctx;
-        console.log(ctx)
+        console.log(ctx.socket.handshake.query)
         const str = ctx.args[0];
         const pkt = JSON.parse(str)
         const sid = socket.id;
