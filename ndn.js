@@ -167,7 +167,7 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
     // ctx.service.chat.reply('this is my reply -')
     //this.app.io.controller.chat.reply('this is my reply =')
     console.log(this.app.io.sockets)
-    this.app.io.sockets.emit('res', 'this is broadcast')
+    this.app.io.emit('message', 'this is broadcast')
     const data1 = new Data(interest.getName());
     data1.setContent(data);
     that.keyChain.sign(data1);
