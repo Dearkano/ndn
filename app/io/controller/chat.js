@@ -32,8 +32,8 @@ class ChatController extends Controller {
         this.ctx.socket.emit('res', message);
     }
 
-    async receive() {
-
+    async reply(msg) {
+        this.ctx.socket.emit('res', msg);
     }
 }
 
