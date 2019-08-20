@@ -1,8 +1,7 @@
-var io = require('socket.io-emitter')({
-    host: '127.0.0.1',
-    port: 6379
+const io = require('socket.io')();
+io.on('connection', socket => { 
+    console.log('connect successfully') 
+    socket.emit('res', 'this is res')
+    io.emit('broadcast', 'this is broadcast')
 });
-setInterval(function () {
-    io.emit('time', new Date);
-}, 5000);
-io.emit('broadcast', 'cccc');
+io.listen(7001);
