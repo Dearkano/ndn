@@ -160,14 +160,15 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
     const obj = JSON.parse(decodeURIComponent(dataArr[4]))
 
     const {
-        senderInfo,
-        receiverInfo,
+        sender,
+        receiver,
         data
     } = obj
-    //const ctx = this.app.createAnonymousContext();
+    const ctx = this.app.createAnonymousContext();
+    const sid = ctx.service.socket.find(sender, receiver)
     // ctx.service.chat.reply('this is my reply -')
     //this.app.io.controller.chat.reply('this is my reply =')
-    this.app.io.emit('res', JSON.stringify(obj))
+    this.app.io.to(sid).emit('res', JSON.stringify(obj))
     const data1 = new Data(interest.getName());
     data1.setContent(data);
     that.keyChain.sign(data1);

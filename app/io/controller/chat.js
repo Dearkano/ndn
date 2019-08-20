@@ -21,7 +21,6 @@ class ChatController extends Controller {
             ctx.status = 404
             return
         }
-        const resStr = res.data.getContent().buf().toString()
         //this.ctx.socket.emit('res', 'send finish');
     }
 

@@ -1,8 +1,21 @@
 module.exports = app => {
     return async (ctx, next) => {
-        //ctx.socket.emit('res', 'connected!');
+        const {
+            app,
+            socket,
+            logger,
+            helper,
+            service
+        } = ctx;
+        const str = ctx.args[0];
+        const pkt = JSON.parse(str)
+        const sid = socket.id;
+        const {
+            sender,
+            receiver,
+            data
+        } = pkt
+        await service.socket.add(sender, receiver, sid)
         await next();
-        // execute when disconnect.
-        console.log('disconnection!');
     };
 };

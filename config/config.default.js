@@ -49,6 +49,11 @@
                 db: 0,
             }
         };
+        config.mongoose = {
+            url: 'mongodb://localhost:27017/chat',
+            options: {},
+        };
+        
 
         // config.cluster = {
         //     listen: {
