@@ -22,7 +22,7 @@ class ChatController extends Controller {
             return
         }
         const resStr = res.data.getContent().buf().toString()
-        this.ctx.socket.emit('res', 'send finish');
+        //this.ctx.socket.emit('res', 'send finish');
     }
 
     async index() {
