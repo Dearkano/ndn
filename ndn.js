@@ -33,7 +33,6 @@ const fetch = require('node-fetch')
 const {
     resolve
 } = require('path')
-var io = require('socket.io-emitter')({ host: '127.0.0.1', port: 6379 });
 
 
 const DEFAULT_RSA_PUBLIC_KEY_DER = new Buffer([
@@ -164,7 +163,8 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         receiverInfo,
         data
     } = obj
-    io.emit('broadcast', 'broadcast'+data);
+    const ctx = this.app.createAnonymousContext();
+    ctx.socket.emit('res', 'this is my res')
     const data1 = new Data(interest.getName());
     data1.setContent(data);
     that.keyChain.sign(data1);
