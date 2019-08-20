@@ -9,4 +9,7 @@ module.exports = app => {
         app.cluster = cluster
         RNStart(app)
     });
+    return async (ctx) => {
+        console.log('in return func')
+    }
 }

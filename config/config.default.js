@@ -34,14 +34,6 @@
             origin: '*',
             allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
         };
-        config.redis = {
-            client: {
-                port: 6379, // Redis port
-                host: '127.0.0.1', // Redis host
-                password: 'auth',
-                db: 0,
-            },
-        }
         config.io = {
             init: {}, // passed to engine.io
             namespace: {
