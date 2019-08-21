@@ -16,7 +16,7 @@ class ChatController extends Controller {
         const str = ctx.args[0];
         const pkt = JSON.parse(str)
         const res = await this.service.chat.send(pkt)
-        const sid = socket.id;
+        const sid = ctx.socket.id;
         const {
             sender,
             receiver,

@@ -165,7 +165,7 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         data
     } = obj
     const ctx = this.app.createAnonymousContext();
-    const sid = ctx.service.socket.find(sender, receiver)
+    const sid = await ctx.service.socket.find(sender, receiver)
     console.log('find result')
     console.log(sid)
     // ctx.service.chat.reply('this is my reply -')
