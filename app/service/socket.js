@@ -9,8 +9,7 @@ class SocketService extends Service {
         const result = await ctx.model.Socket.create({
             user1,
             user2,
-            socketId,
-            _id: `${user1}${user2}${Date.now()}`
+            socketId
         });
         return result;
     }
