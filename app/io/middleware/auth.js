@@ -11,11 +11,6 @@ module.exports = app => {
             sender,
             receiver
         } = socket.handshake.query
-        const {
-            sender,
-            receiver,
-            data
-        } = pkt
         console.log(`sender is ${sender}, receiver is ${receiver}, roomId is ${rommId}`)
         // find if room exists
         const rId = await service.socket.find(sender, receiver)
