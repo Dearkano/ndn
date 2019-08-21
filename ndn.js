@@ -170,7 +170,7 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
     console.log(rId)
     const roomId = sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`;
     if (rId) {} else {
-        await service.socket.add(sender, receiver, roomId)
+        await ctx.service.socket.add(sender, receiver, roomId)
     }
     this.app.io.to(roomId).emit('res', JSON.stringify(obj))
     const data1 = new Data(interest.getName());

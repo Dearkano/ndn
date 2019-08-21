@@ -17,7 +17,7 @@ class ChatController extends Controller {
         const pkt = JSON.parse(str)
         const res = await this.service.chat.send(pkt)
         if (!res.data) {
-            ctx.body = "file not found"
+            ctx.body = 'file not found'
             ctx.status = 404
             return
         }
