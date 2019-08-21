@@ -165,14 +165,14 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         data
     } = obj
     const ctx = this.app.createAnonymousContext();
-    const sid = await ctx.service.socket.find(sender, receiver)
+    const rId = await ctx.service.socket.find(sender, receiver)
     console.log('find result')
-    console.log(sid)
-    if(sid){
-        this.app.io.to(sid).emit('res', JSON.stringify(obj))
-    }else{
-        
+    console.log(rId)
+    const roomId = sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`;
+    if (rId) {} else {
+        await service.socket.add(sender, receiver, roomId)
     }
+    this.app.io.to(roomId).emit('res', JSON.stringify(obj))
     const data1 = new Data(interest.getName());
     data1.setContent(data);
     that.keyChain.sign(data1);
