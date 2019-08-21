@@ -168,9 +168,11 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
     const sid = await ctx.service.socket.find(sender, receiver)
     console.log('find result')
     console.log(sid)
-    // ctx.service.chat.reply('this is my reply -')
-    //this.app.io.controller.chat.reply('this is my reply =')
-    this.app.io.to(sid).emit('res', JSON.stringify(obj))
+    if(sid){
+        this.app.io.to(sid).emit('res', JSON.stringify(obj))
+    }else{
+        
+    }
     const data1 = new Data(interest.getName());
     data1.setContent(data);
     that.keyChain.sign(data1);

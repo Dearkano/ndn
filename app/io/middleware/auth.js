@@ -7,6 +7,7 @@ module.exports = app => {
             helper,
             service
         } = ctx;
+        console.log(socket.handshake.query)
         await next();
     };
 };

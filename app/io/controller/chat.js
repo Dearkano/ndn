@@ -23,7 +23,7 @@ class ChatController extends Controller {
             data
         } = pkt
         console.log(`sender is ${sender}, receiver is ${receiver}, sid is ${sid}`)
-        await service.socket.add(sender, receiver, sid)
+        await this.service.socket.add(sender, receiver, sid)
         if (!res.data) {
             ctx.body = "file not found"
             ctx.status = 404
