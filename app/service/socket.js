@@ -15,7 +15,7 @@ class SocketService extends Service {
     }
 
     async find(user1, user2) {
-        const result = await this.ctx.model.Socket.find({
+        const result = await this.ctx.model.Socket.findOne({
             '$or': [{
                 'user1': user1,
                 'user2': user2
