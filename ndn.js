@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * A copy of the GNU Lesser General Public License is in the file COPYING.
  */
-
+'use strict'
 const {
     Face,
     Name,
