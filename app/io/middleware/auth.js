@@ -11,7 +11,7 @@ module.exports = app => {
             sender,
             receiver
         } = socket.handshake.query
-        console.log(`sender is ${sender}, receiver is ${receiver}, roomId is ${rommId}`)
+        console.log(`sender is ${sender}, receiver is ${receiver}, roomId is ${roomId}`)
         // find if room exists
         const rId = await service.socket.find(sender, receiver)
         const roomId = sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`;
