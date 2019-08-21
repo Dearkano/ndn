@@ -24,6 +24,7 @@ class SocketService extends Service {
                 'user2': user1
             }]
         })
+        console.log('find user1 and user2')
         console.log(result)
         const socketId = result.socketId
         return socketId
