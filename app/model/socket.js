@@ -7,17 +7,17 @@ module.exports = app => {
     const SocketSchema = new Schema({
         user1: {
             type: String,
-            unique: true,
+            unique: false,
             required: true,
         },
         user2: {
             type: String,
-            unique: true,
+            unique: false,
             required: true,
         },
         socketId: {
             type: String,
-            unique: true,
+            unique: false,
             required: true,
         }
     });
