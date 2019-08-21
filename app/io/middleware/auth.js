@@ -7,16 +7,6 @@ module.exports = app => {
             helper,
             service
         } = ctx;
-        console.log(ctx.socket.handshake.query)
-        const str = ctx.args[0];
-        const pkt = JSON.parse(str)
-        const sid = socket.id;
-        const {
-            sender,
-            receiver,
-            data
-        } = pkt
-        await service.socket.add(sender, receiver, sid)
         await next();
     };
 };

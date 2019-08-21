@@ -16,6 +16,14 @@ class ChatController extends Controller {
         const str = ctx.args[0];
         const pkt = JSON.parse(str)
         const res = await this.service.chat.send(pkt)
+        const sid = socket.id;
+        const {
+            sender,
+            receiver,
+            data
+        } = pkt
+        console.log(`sender is ${sender}, receiver is ${receiver}, sid is ${sid}`)
+        await service.socket.add(sender, receiver, sid)
         if (!res.data) {
             ctx.body = "file not found"
             ctx.status = 404
