@@ -33,7 +33,7 @@ class ChatController extends Controller {
             this.ctx.body = 'user not exist'
             this.ctx.status = 400
         }else{
-            this.ctx.body = result.data
+            this.ctx.body = result.data.getContent().buf().toString()
             this.ctx.status = 200
         }
     }
