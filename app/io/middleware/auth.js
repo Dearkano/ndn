@@ -24,6 +24,11 @@ module.exports = app => {
             await service.socket.add(sender, receiver, roomId)
         }
         socket.join(roomId)
+
+        // find the history message
+        const result = await service.message.find(sender, receiver)
+        socket.emit('history', JSON.stringify(result))
+
         await next();
     };
 };

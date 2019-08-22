@@ -170,18 +170,27 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         console.log('find result')
         console.log(rId)
         const roomId = sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`;
-        if (rId) {} else {
-            await ctx.service.socket.add(sender, receiver, roomId)
+        const uId = await ctx.service.user.find(receiver)
+        // if the receiver is connected to this server
+        if (uId) {
+            if (!rId) {
+                await ctx.service.socket.add(sender, receiver, roomId)
+            } else {}
+            this.app.io.to(roomId).emit('res', JSON.stringify(obj))
+            const data1 = new Data(interest.getName());
+            data1.setContent(data);
+            that.keyChain.sign(data1);
+            try {
+                face.putData(data1);
+            } catch (e) {
+                console.log(e.toString());
+            }
         }
-        this.app.io.to(roomId).emit('res', JSON.stringify(obj))
-        const data1 = new Data(interest.getName());
-        data1.setContent(data);
-        that.keyChain.sign(data1);
-        try {
-            face.putData(data1);
-        } catch (e) {
-            console.log(e.toString());
+        // if the receiver is not online
+        else {
+            await ctx.service.message.add(sender, receiver, data)
         }
+
     } else if (opt === 'publicKey') {
         const {
             username
