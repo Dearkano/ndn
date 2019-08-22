@@ -31,9 +31,11 @@ class ChatController extends Controller {
             ctx
         } = this
         const str = ctx.args[0];
+        console.log('set public key')
         const { publicKey, username } = JSON.parse(str)
         // check if this user exists
         const uId = await this.service.user.find(username)
+        console.log(uId)
         if (uId) {} else {
             await this.service.user.add(username, publicKey)
         }
