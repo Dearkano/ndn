@@ -27,6 +27,8 @@ module.exports = app => {
 
         // find the history message
         const result = await service.message.find(receiver, sender)
+        console.log('history')
+        console.log(result)
         socket.emit('history', JSON.stringify(result))
 
         await next();
