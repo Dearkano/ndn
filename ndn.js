@@ -155,32 +155,52 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
     console.log(str)
     const dataArr = str.split('/')
     const cluster = dataArr[2]
+    const opt = dataArr[3]
     if (this.app.cluster === cluster) return
     console.log(decodeURIComponent(dataArr[4]))
     const obj = JSON.parse(decodeURIComponent(dataArr[4]))
+    if (opt === 'afid') {
+        const {
+            sender,
+            receiver,
+            data
+        } = obj
+        const ctx = this.app.createAnonymousContext();
+        const rId = await ctx.service.socket.find(sender, receiver)
+        console.log('find result')
+        console.log(rId)
+        const roomId = sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`;
+        if (rId) {} else {
+            await ctx.service.socket.add(sender, receiver, roomId)
+        }
+        this.app.io.to(roomId).emit('res', JSON.stringify(obj))
+        const data1 = new Data(interest.getName());
+        data1.setContent(data);
+        that.keyChain.sign(data1);
+        try {
+            face.putData(data1);
+        } catch (e) {
+            console.log(e.toString());
+        }
+    } else if (opt === 'publicKey') {
+        const {
+            username
+        } = obj
+        const result = await ctx.service.user.find(username)
+        const data1 = new Data(interest.getName());
+        if (!result) {
+            data1.setContent(null)
+        } else {
+            data1.setContent(result)
+        }
+        that.keyChain.sign(data1);
+        try {
+            face.putData(data1);
+        } catch (e) {
+            console.log(e.toString());
+        }
+    }
 
-    const {
-        sender,
-        receiver,
-        data
-    } = obj
-    const ctx = this.app.createAnonymousContext();
-    const rId = await ctx.service.socket.find(sender, receiver)
-    console.log('find result')
-    console.log(rId)
-    const roomId = sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`;
-    if (rId) {} else {
-        await ctx.service.socket.add(sender, receiver, roomId)
-    }
-    this.app.io.to(roomId).emit('res', JSON.stringify(obj))
-    const data1 = new Data(interest.getName());
-    data1.setContent(data);
-    that.keyChain.sign(data1);
-    try {
-        face.putData(data1);
-    } catch (e) {
-        console.log(e.toString());
-    }
 };
 
 Echo.prototype.onRegisterFailed = function (prefix) {

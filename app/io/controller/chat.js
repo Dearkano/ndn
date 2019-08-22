@@ -1,13 +1,4 @@
 const Controller = require('egg').Controller;
-const {
-    Face,
-    Name,
-    UnixTransport,
-    Interest
-} = require('ndn-js-sdk')
-Interest.setDefaultCanBePrefix(true);
-const face = new Face(new UnixTransport());
-
 class ChatController extends Controller {
     async send() {
         const {
@@ -33,6 +24,18 @@ class ChatController extends Controller {
 
     async reply(msg) {
         this.ctx.socket.emit('res', msg);
+    }
+
+    async getPublicKey() {
+        const { username } = this.ctx.request.query
+        const result = await this.service.chat.getPublicKey(username)
+        if(!result.data) {
+            this.ctx.body = 'user not exist'
+            this.ctx.status = 400
+        }else{
+            this.ctx.body = result.data
+            this.ctx.status = 200
+        }
     }
 }
 

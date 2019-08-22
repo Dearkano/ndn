@@ -22,6 +22,19 @@ function asyncInterest(cluster, pkt) {
         }));
     })
 }
+function asyncInterest2(cluster, pkt) {
+    return new Promise(function (resolve) {
+        const d = JSON.stringify(pkt)
+        const name = new Name(`/chat/${cluster}/publicKey/${d}`);
+        console.log("Express name " + name.toUri());
+        face.expressInterest(name, (_, data) => resolve({
+            code: 0,
+            data
+        }), () => resolve({
+            code: 1
+        }));
+    })
+}
 
 module.exports = app => {
     class ChatService extends app.Service {
@@ -32,6 +45,9 @@ module.exports = app => {
         async reply(msg) {
             console.log(' in service')
             this.ctx.socket.emit('res', msg)
+        }
+        async getPublicKey(username) {
+            return await asyncInterest2(app.cluster, {username})
         }
     }
     return ChatService

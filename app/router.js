@@ -19,5 +19,6 @@ module.exports = app => {
     router.post('/getRNodeInfo', controller.afs.getRNodeInfo)
     router.post('/file_record/afid', controller.publish.getFileRecord)
     router.get('/getFileParameter', controller.publish.getFileParameter);
+    router.get('/getPublicKey', controller.chat.getPublicKey);
     app.io.route('chat', app.io.controller.chat.send);
 };

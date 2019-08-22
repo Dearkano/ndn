@@ -11,13 +11,20 @@ module.exports = app => {
         } = ctx;
         const {
             sender,
-            receiver
+            receiver,
+            publicKey
         } = socket.handshake.query
+
+        // check if this user exists
+        const uId = await service.user.find(sender)
+        if(uId){}else{
+            await service.user.add(sender, publicKey)
+        }
 
         // find if room exists
         const rId = await service.socket.find(sender, receiver)
         const roomId = sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`;
-        console.log(`sender is ${sender}, receiver is ${receiver}, roomId is ${roomId}`)
+        console.log(`sender is ${sender}, receiver is ${receiver}, roomId is ${roomId}, publicKey is ${publicKey}`)
         logger.info('rid', rId)
         logger.info('roomId', roomId)
         if (rId) {} else {
