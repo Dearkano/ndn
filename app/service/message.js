@@ -16,7 +16,7 @@ class MessageService extends Service {
     }
 
     async find(sender, receiver) {
-        const result = await this.ctx.model.message.find({
+        const result = await this.ctx.model.Message.find({
             receiver, sender
         })
         console.log('find receiver sender')
