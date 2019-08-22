@@ -189,7 +189,7 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         const result = await ctx.service.user.find(username)
         const data1 = new Data(interest.getName());
         if (!result) {
-            data1.setContent(null)
+            return
         } else {
             data1.setContent(result)
         }
