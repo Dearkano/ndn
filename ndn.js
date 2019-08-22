@@ -159,13 +159,13 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
     if (this.app.cluster === cluster) return
     console.log(decodeURIComponent(dataArr[4]))
     const obj = JSON.parse(decodeURIComponent(dataArr[4]))
+    const ctx = this.app.createAnonymousContext();
     if (opt === 'afid') {
         const {
             sender,
             receiver,
             data
         } = obj
-        const ctx = this.app.createAnonymousContext();
         const rId = await ctx.service.socket.find(sender, receiver)
         console.log('find result')
         console.log(rId)
