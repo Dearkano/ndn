@@ -14,7 +14,7 @@ class UserService extends Service {
     }
 
     async find(username) {
-        const result = await this.ctx.model.Socket.findOne({
+        const result = await this.ctx.model.User.findOne({
             username
         })
         console.log('find user')
