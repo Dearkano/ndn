@@ -6,7 +6,7 @@ class MessageService extends Service {
         const {
             ctx,
         } = this;
-        const result = await ctx.model.message.create({
+        const result = await ctx.model.Message.create({
             sender,
             receiver,
             afid,
