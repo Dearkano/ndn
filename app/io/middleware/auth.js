@@ -29,8 +29,10 @@ module.exports = app => {
         const result = await service.message.find(receiver, sender)
         console.log('history')
         console.log(result)
-        socket.emit('history', JSON.stringify(result))
-
+        if (result.length !== 0) {
+            socket.emit('history', JSON.stringify(result))
+            await service.message.update(receiver, sender)
+        }
         await next();
     };
 };

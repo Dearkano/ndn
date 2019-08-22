@@ -17,11 +17,25 @@ class MessageService extends Service {
 
     async find(sender, receiver) {
         const result = await this.ctx.model.Message.find({
-            receiver, sender
+            receiver,
+            sender,
+            status: 'pending'
         })
         console.log('find receiver sender')
         console.log(result)
         return result
+    }
+
+    async update(sender, receiver) {
+        const result = await this.ctx.model.Message.update({
+            receiver,
+            sender,
+            status: 'pending'
+        }, {
+            $set: {
+                status: 'sent'
+            }
+        })
     }
 }
 module.exports = MessageService;
