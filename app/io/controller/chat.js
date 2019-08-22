@@ -26,13 +26,28 @@ class ChatController extends Controller {
         this.ctx.socket.emit('res', msg);
     }
 
+    async setPublicKey() {
+        const {
+            ctx
+        } = this
+        const str = ctx.args[0];
+        const { publicKey, username } = JSON.parse(str)
+        // check if this user exists
+        const uId = await this.service.user.find(username)
+        if (uId) {} else {
+            await this.service.user.add(username, publicKey)
+        }
+    }
+
     async getPublicKey() {
-        const { username } = this.ctx.request.query
+        const {
+            username
+        } = this.ctx.request.query
         const result = await this.service.chat.getPublicKey(username)
-        if(!result.data) {
+        if (!result.data) {
             this.ctx.body = 'user not exist'
             this.ctx.status = 400
-        }else{
+        } else {
             this.ctx.body = result.data.getContent().buf().toString()
             this.ctx.status = 200
         }
