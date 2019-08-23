@@ -1,4 +1,4 @@
-const RNStart  = require('./ndn')
+const RNStart = require('./ndn')
 const fs = require('fs')
 module.exports = app => {
     app.beforeStart(async () => {
@@ -9,6 +9,16 @@ module.exports = app => {
         app.cluster = cluster
         RNStart(app)
     });
+
+    app.ready(async () => {
+        setInterval(
+            async () => {
+                console.log('send online list')
+                const ctx = app.createAnonymousContext();
+                await ctx.service.cluster.updateOnlineList()
+                console.log('send online list finish')
+            }, 5000)
+    })
     return async (ctx) => {
         console.log('in return func')
     }

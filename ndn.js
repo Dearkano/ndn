@@ -208,6 +208,8 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         } catch (e) {
             console.log(e.toString());
         }
+    } else if(opt==='onlinelist') {
+       await ctx.service.cluster.receiveOnlineList(cluster, obj)
     }
 
 };
