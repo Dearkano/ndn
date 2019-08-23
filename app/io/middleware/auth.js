@@ -38,6 +38,6 @@ module.exports = app => {
 
         // disconnect
         console.log(`${sender} disconnect`)
-        await service.user.delete({username: sender})
+        await service.user.deleteOne({username: sender})
     };
 };
