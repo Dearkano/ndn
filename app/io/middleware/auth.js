@@ -35,5 +35,9 @@ module.exports = app => {
             await service.message.update(receiver, sender)
         }
         await next();
+
+        // disconnect
+        console.log(`${sender} disconnect`)
+        await service.user.delete({username: sender})
     };
 };

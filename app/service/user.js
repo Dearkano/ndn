@@ -24,5 +24,9 @@ class UserService extends Service {
         }
         return result
     }
+
+    async delete(username) {
+        await this.ctx.model.User.delete({username})
+    }
 }
 module.exports = UserService;
