@@ -8,7 +8,8 @@ class UserService extends Service {
         } = this;
         const result = await ctx.model.User.create({
             username: sender,
-            publicKey
+            publicKey,
+            online: true
         });
         return result;
     }

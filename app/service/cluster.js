@@ -25,12 +25,12 @@ function asyncInterest(cluster, pkt) {
 
 module.exports = app => {
     class ClusterService extends app.Service {
-        async updateOnlineList(){
+        async getOnlineList(){
             const result = await this.ctx.model.User.find()
-            await asyncInterest(app.cluster, result)
+            return result
         }
 
-        async receiveOnlineList(cluster, list){
+        async requestOnlineList(){
             const prs = await this.ctx.model.Cluster.find({cluster})
             if(!prs){
                 const result = await this.ctx.model.Cluster.add({cluster, list})

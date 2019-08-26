@@ -15,6 +15,11 @@ module.exports = app => {
             unique: false,
             required: true,
         },
+        online: {
+            type: Boolean,
+            unique: false,
+            required: true
+        }
     });
     return mongoose.model('User', UserSchema);
 };

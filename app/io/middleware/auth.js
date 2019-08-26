@@ -38,6 +38,6 @@ module.exports = app => {
 
         // disconnect
         console.log(`${sender} disconnect`)
-        await service.user.delete(sender)
+        await service.user.update({username: sender}, {online: false})
     };
 };

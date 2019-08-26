@@ -200,7 +200,7 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         if (!result) {
             return
         } else {
-            data1.setContent(JSON.stringify(result))
+       
         }
         that.keyChain.sign(data1);
         try {
@@ -209,7 +209,15 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
             console.log(e.toString());
         }
     } else if(opt==='onlinelist') {
-       await ctx.service.cluster.receiveOnlineList(cluster, obj)
+       const result = await ctx.service.cluster.getOnlineList()
+       const data1 = new Data(interest.getName());
+       data1.setContent(JSON.stringify(result))
+       that.keyChain.sign(data1);
+       try {
+           face.putData(data1);
+       } catch (e) {
+           console.log(e.toString());
+       }
     }
 
 };
