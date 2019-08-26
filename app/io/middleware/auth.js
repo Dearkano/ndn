@@ -14,6 +14,8 @@ module.exports = app => {
             receiver
         } = socket.handshake.query
 
+        // connect 
+        await service.user.connect(sender)
         // find if room exists
         const rId = await service.socket.find(sender, receiver)
         const roomId = sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`;

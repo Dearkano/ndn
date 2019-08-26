@@ -27,11 +27,25 @@ class UserService extends Service {
     }
 
     async delete(username) {
-        await this.ctx.model.User.remove({username})
+        await this.ctx.model.User.remove({
+            username
+        })
+    }
+
+    async connect(username) {
+        await this.ctx.model.User.update({
+            username
+        }, {
+            online: true
+        })
     }
 
     async disconnect(username) {
-        await this.ctx.model.User.update({username}, {online: false})
+        await this.ctx.model.User.update({
+            username
+        }, {
+            online: false
+        })
     }
 }
 module.exports = UserService;
