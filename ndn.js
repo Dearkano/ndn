@@ -170,9 +170,9 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         console.log('find result')
         console.log(rId)
         const roomId = sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`;
-        const uId = await ctx.service.user.find(receiver)
+        const userInfo = await ctx.service.user.find(receiver)
         // if the receiver is connected to this server
-        if (uId) {
+        if (userInfo && userInfo.online) {
             if (!rId) {
                 await ctx.service.socket.add(sender, receiver, roomId)
             } else {}
