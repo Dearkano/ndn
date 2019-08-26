@@ -10,15 +10,15 @@ module.exports = app => {
         RNStart(app)
     });
 
-    app.ready(async () => {
-        setInterval(
-            async () => {
-                console.log('send online list request')
-                const ctx = app.createAnonymousContext();
-                await ctx.service.cluster.requestOnlineList()
-                console.log('received online list')
-            }, 5000)
-    })
+    // app.ready(async () => {
+    //     setInterval(
+    //         async () => {
+    //             console.log('send online list request')
+    //             const ctx = app.createAnonymousContext();
+    //             await ctx.service.cluster.requestOnlineList()
+    //             console.log('received online list')
+    //         }, 5000)
+    // })
     return async (ctx) => {
         console.log('in return func')
     }
