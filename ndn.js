@@ -200,7 +200,7 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         if (!result) {
             return
         } else {
-       
+            data1.setContent(JSON.stringify(result))
         }
         that.keyChain.sign(data1);
         try {
