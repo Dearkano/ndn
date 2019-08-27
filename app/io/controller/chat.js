@@ -46,6 +46,7 @@ class ChatController extends Controller {
             username
         } = this.ctx.request.query
         const result = await this.service.chat.getPublicKey(username)
+        console.log(result)
         if (!result.data) {
             this.ctx.body = 'user not exist'
             this.ctx.status = 400
