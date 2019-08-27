@@ -196,13 +196,13 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
             username
         } = obj
         const result = await ctx.service.user.find(username)
-        console.log('----')
-        console.log(result)
         const data1 = new Data(interest.getName());
         if (!result) {
             return
         } else {
-            data1.setContent(result)
+            const dataStr = JSON.stringify(result)
+            console.log(dataStr)
+            data1.setContent(dataStr)
         }
         console.log(data1)
         that.keyChain.sign(data1);
