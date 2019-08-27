@@ -41,5 +41,6 @@ module.exports = app => {
         // disconnect
         console.log(`${sender} disconnect`)
         await service.user.disconnect(sender)
+        socket.leave(roomId)
     };
 };
