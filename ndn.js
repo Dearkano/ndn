@@ -196,6 +196,8 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
             username
         } = obj
         const result = await ctx.service.user.find(username)
+        console.log('----')
+        console.log(result)
         const data1 = new Data(interest.getName());
         if (!result) {
             return
