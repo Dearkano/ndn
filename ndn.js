@@ -202,7 +202,7 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         if (!result) {
             return
         } else {
-            data1.setContent('123')
+            data1.setContent(result)
         }
         console.log(data1)
         that.keyChain.sign(data1);
