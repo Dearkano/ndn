@@ -39,7 +39,7 @@ function asyncInterest2(cluster, pkt) {
 function asyncInterest3(cluster, pkt) {
     return new Promise(function (resolve) {
         const d = JSON.stringify(pkt)
-        const name = new Name(`/image/${cluster}/afid/${d}`);
+        const name = new Name(`/chat/${cluster}/image/${d}`);
         console.log("Express name " + name.toUri());
         face.expressInterest(name, (_, data) => resolve({
             code: 0,
