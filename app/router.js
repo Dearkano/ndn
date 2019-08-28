@@ -21,5 +21,6 @@ module.exports = app => {
     router.get('/getFileParameter', controller.publish.getFileParameter);
     router.get('/getPublicKey', controller.chat.getPublicKey);
     app.io.route('chat', app.io.controller.chat.send);
+    app.io.route('image', app.io.controller.chat.sendImage);
     app.io.route('publicKey', app.io.controller.chat.setPublicKey);
 };

@@ -160,12 +160,13 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
     console.log(decodeURIComponent(dataArr[4]))
     const obj = JSON.parse(decodeURIComponent(dataArr[4]))
     const ctx = this.app.createAnonymousContext();
-    if (opt === 'afid') {
+    if (opt === 'afid' || opt === 'image' || opt ==='file') {
         const {
             sender,
             receiver,
             data
         } = obj
+        obj.type = opt 
         const rId = await ctx.service.socket.find(sender, receiver)
         console.log('find result')
         console.log(rId)
@@ -211,16 +212,16 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         } catch (e) {
             console.log(e.toString());
         }
-    } else if(opt==='onlinelist') {
-       const result = await ctx.service.cluster.getOnlineList()
-       const data1 = new Data(interest.getName());
-       data1.setContent(JSON.stringify(result))
-       that.keyChain.sign(data1);
-       try {
-           face.putData(data1);
-       } catch (e) {
-           console.log(e.toString());
-       }
+    } else if (opt === 'onlinelist') {
+        const result = await ctx.service.cluster.getOnlineList()
+        const data1 = new Data(interest.getName());
+        data1.setContent(JSON.stringify(result))
+        that.keyChain.sign(data1);
+        try {
+            face.putData(data1);
+        } catch (e) {
+            console.log(e.toString());
+        }
     }
 
 };

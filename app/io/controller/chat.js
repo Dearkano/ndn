@@ -15,6 +15,20 @@ class ChatController extends Controller {
         //this.ctx.socket.emit('res', 'send finish');
     }
 
+    async sendImage() {
+        const {
+            ctx
+        } = this
+        const str = ctx.args[0];
+        const pkt = JSON.parse(str)
+        const res = await this.service.chat.sendImage(pkt)
+        if (!res.data) {
+            ctx.body = 'file not found'
+            ctx.status = 404
+            return
+        }
+    }
+
     async index() {
         const message = this.ctx.args[0];
         console.log('chat :', message + ' : ' + process.pid);
