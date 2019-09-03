@@ -32,3 +32,16 @@ cd rnode \
 **run ndn server**
 
 `screen npm run dev`
+
+**install npm**
+```
+# install nodejs
+RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash \
+    && source ~/.nvm/nvm.sh \
+    && nvm install node \
+    && nvm use node
+
+# install ndn-server
+RUN git clone https://github.com/Dearkano/ndn.git \
+    && npm install
+```
