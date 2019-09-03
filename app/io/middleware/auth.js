@@ -11,11 +11,20 @@ module.exports = app => {
         } = ctx;
         const {
             sender,
-            receiver
+            receiver,
+            user
         } = socket.handshake.query
 
         // connect 
         await service.user.connect(sender)
+
+        // connect with server
+        if(user){
+
+        }else{
+            
+        }
+
         // find if room exists
         const rId = await service.socket.find(sender, receiver)
         const roomId = sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`;
