@@ -52,7 +52,7 @@ module.exports = app => {
         if(user){
             socket.leave(`server-${user}`)
         }else{
-            socket.leave(roomId)
+            socket.leave(sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`)
         }
 
     };
