@@ -20,7 +20,7 @@ module.exports = app => {
     router.post('/file_record/afid', controller.publish.getFileRecord)
     router.get('/getFileParameter', controller.publish.getFileParameter);
     router.get('/getPublicKey', controller.chat.getPublicKey);
-    router.get('/getFriendList', controller.chat.getFriendList);
+    //router.get('/getFriendList', controller.chat.getFriendList);
     router.post('/addFriend', controller.chat.addFriend);
     app.io.route('chat', app.io.controller.chat.send);
     app.io.route('image', app.io.controller.chat.sendImage);
