@@ -47,13 +47,14 @@ module.exports = app => {
         await next();
 
         // disconnect
-        console.log(`${sender} disconnect`)
+
         await service.user.disconnect(sender)
-        if(user){
+        if (user) {
+            console.log(`${user} disconnect`)
             socket.leave(`server-${user}`)
-        }else{
+        } else {
+            console.log(sender > receiver ? `${sender}-${receiver} disconnected` : `${receiver}-${sender} disconnected`)
             socket.leave(sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`)
         }
-
     };
 };

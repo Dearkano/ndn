@@ -175,9 +175,13 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         // if the receiver is connected to this server
         if (userInfo && userInfo.online) {
             if (!rId) {
-                await ctx.service.socket.add(sender, receiver, roomId)
-            } else {}
-            this.app.io.to(roomId).emit('res', JSON.stringify(obj))
+                //await ctx.service.socket.add(sender, receiver, roomId)
+                this.app.io.to(`server-${receiver}`).emit('newMes', JSON.stringify(obj))
+                await ctx.service.message.add(sender, receiver, data, 'pending')
+            } else {
+                this.app.io.to(roomId).emit('res', JSON.stringify(obj))
+                await ctx.service.message.add(sender, receiver, data, 'sent')
+            }
             const data1 = new Data(interest.getName());
             data1.setContent(data);
             that.keyChain.sign(data1);
@@ -186,10 +190,11 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
             } catch (e) {
                 console.log(e.toString());
             }
+
         }
         // if the receiver is not online
         else {
-            await ctx.service.message.add(sender, receiver, data)
+
         }
 
     } else if (opt === 'publicKey') {

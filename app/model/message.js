@@ -24,6 +24,11 @@ module.exports = app => {
             type: String,
             unique: false,
             required: true,
+        },
+        timestamp: {
+            type: String,
+            unique: false,
+            required: true
         }
     });
     return mongoose.model('Message', MessageSchema);

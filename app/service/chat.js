@@ -66,6 +66,28 @@ module.exports = app => {
         async getPublicKey(username) {
             return await asyncInterest2(app.cluster, {username})
         }
+
+        async getMessageList(addr) {
+            const result = await this.ctx.model.Message.find({receiver: addr})
+            const addrs = []
+            const rs = []
+            // find distinct addrs
+            for(const item of result){
+                if(addrs.indexOf(item.sender)===-1){
+                    addrs.push(item.sender)
+                    rs.push({sender: item.sender, receiver:addr, messages:[]})
+                }
+            }
+
+            // push
+            for(const item of result){
+                const index = addrs.indexOf(item.sender)
+                rs[index].messages.push({afid: item.afid, timestamp: item.timestamp || Date.now()})
+            }
+
+            return rs
+
+        }
     }
     return ChatService
 }

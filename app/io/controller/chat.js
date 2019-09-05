@@ -69,6 +69,15 @@ class ChatController extends Controller {
             this.ctx.status = 200
         }
     }
+
+    async getMessageList() {
+        const {
+            addr
+        } = this.ctx.request.query
+        const result = await this.service.chat.getMessageList(addr)
+        this.ctx.body = result
+        this.ctx.status = 200
+    }
 }
 
 module.exports = ChatController
