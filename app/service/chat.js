@@ -98,7 +98,7 @@ module.exports = app => {
                 })
             }
 
-            await this.ctx.model.Message.update(addr)
+            // await this.ctx.model.Message.update(addr)
 
             return rs
 

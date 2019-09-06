@@ -210,7 +210,9 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
             console.log(dataStr)
             data1.setContent(dataStr)
         }
+        console.log('===')
         console.log(data1)
+        console.log('---')
         that.keyChain.sign(data1);
         try {
             face.putData(data1);

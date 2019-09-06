@@ -27,9 +27,10 @@ class MessageService extends Service {
         return result
     }
 
-    async update(receiver) {
+    async update(receiver, sender) {
         const result = await this.ctx.model.Message.updateMany({
             receiver,
+            sender,
             status: 'pending'
         }, {
             $set: {
