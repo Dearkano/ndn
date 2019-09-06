@@ -170,10 +170,11 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
             data
         } = obj
         obj.type = opt 
+        // if(this.app.cluster === cluster)
         const rId = await ctx.service.socket.find(sender, receiver)
         console.log('find result')
         console.log(rId)
-        const roomId = sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`;
+        const roomId = `${sender}-${receiver}` 
         const userInfo = await ctx.service.user.find(receiver)
         // if the receiver is connected to this server
         if (userInfo && userInfo.online) {

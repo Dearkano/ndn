@@ -24,7 +24,7 @@ module.exports = app => {
         } else {
             // find if room exists
             const rId = await service.socket.find(sender, receiver)
-            const roomId = sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`;
+            const roomId = `${sender}-${receiver}`;
             console.log(`sender is ${sender}, receiver is ${receiver}, roomId is ${roomId}`)
             logger.info('rid', rId)
             logger.info('roomId', roomId)
@@ -53,8 +53,8 @@ module.exports = app => {
             console.log(`${user} disconnect`)
             socket.leave(`server-${user}`)
         } else {
-            console.log(sender > receiver ? `${sender}-${receiver} disconnected` : `${receiver}-${sender} disconnected`)
-            socket.leave(sender > receiver ? `${sender}-${receiver}` : `${receiver}-${sender}`)
+            console.log( `${sender}-${receiver} disconnected`)
+            socket.leave(`${sender}-${receiver}` )
         }
     };
 };
