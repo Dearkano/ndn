@@ -152,12 +152,15 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
     const that = this
     // info request : /chat/cluster/afid/data
     const str = interest.getName().toUri()
+    console.log('---receive interest----')
     console.log(str)
     const dataArr = str.split('/')
     const cluster = dataArr[2]
     const opt = dataArr[3]
     if (this.app.cluster === cluster) return
+    console.log('---json parsed---')
     console.log(decodeURIComponent(dataArr[4]))
+
     const obj = JSON.parse(decodeURIComponent(dataArr[4]))
     const ctx = this.app.createAnonymousContext();
     if (opt === 'afid' || opt === 'image' || opt ==='file') {
