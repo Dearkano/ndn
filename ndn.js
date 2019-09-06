@@ -157,7 +157,7 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
     const dataArr = str.split('/')
     const cluster = dataArr[2]
     const opt = dataArr[3]
-    if (this.app.cluster === cluster) return
+    //if (this.app.cluster === cluster) return
     console.log('---json parsed---')
     console.log(decodeURIComponent(dataArr[4]))
 
