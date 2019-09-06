@@ -20,7 +20,7 @@ class MessageService extends Service {
         const result = await this.ctx.model.Message.find({
             receiver,
             sender,
-            status: 'pending'
+           // status: 'pending'
         })
         console.log('find receiver sender')
         console.log(result)
