@@ -34,7 +34,7 @@ class MessageService extends Service {
         return result
     }
 
-    async update(receiver, sender) {
+    async update(sender, receiver) {
         const result = await this.ctx.model.Message.updateMany({
             receiver,
             sender,
