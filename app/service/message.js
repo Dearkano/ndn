@@ -2,7 +2,7 @@
 
 const Service = require('egg').Service;
 class MessageService extends Service {
-    async add(sender, receiver, afid, status='pending') {
+    async add(sender, receiver, afid, status = 'pending') {
         const {
             ctx,
         } = this;
@@ -18,9 +18,16 @@ class MessageService extends Service {
 
     async find(sender, receiver) {
         const result = await this.ctx.model.Message.find({
-            receiver,
-            sender,
-           // status: 'pending'
+            "$or": [{
+                receiver,
+                sender
+            }, {
+                receiver: sender,
+                sender: receiver
+            }]
+            // status: 'pending'
+        }).sort({
+            timestamp: 1
         })
         console.log('find receiver sender')
         console.log(result)
