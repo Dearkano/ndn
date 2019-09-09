@@ -26,11 +26,23 @@ class SocketService extends Service {
         })
         console.log('find user1 and user2')
         console.log(result)
-        if(!result) {
+        if (!result) {
             return null
         }
         const socketId = result.socketId
         return socketId
+    }
+    async disconnect(user1, user2) {
+        const result = await this.ctx.model.Socket.remove({
+            '$or': [{
+                'user1': user1,
+                'user2': user2
+            }, {
+                'user1': user2,
+                'user2': user1
+            }]
+        })
+        return result
     }
 }
 module.exports = SocketService;
