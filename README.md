@@ -2,6 +2,166 @@
 ##### Author: Vayne Tian
 ##### Date: 2019/08/15
 
+
+## Installation
+### Install Docker on Ubuntu
+**follow https://docs.docker.com/install/linux/docker-ce/ubuntu/**
+
+Update the apt package index:
+
+`sudo apt-get update`
+
+Install packages to allow apt to use a repository over HTTPS:
+```
+    sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+```
+
+Add Docker’s official GPG key:
+
+`curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -`
+
+```
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+```
+
+Update the apt package index.
+
+`sudo apt-get update`
+
+Install the latest version of Docker Engine - Community and containerd
+
+`sudo apt-get install docker-ce docker-ce-cli containerd.io`
+
+### Deploy docker container
+**use docker image online from dockerhub**
+
+`docker run -v /data/tmp/:/tmp -v /aos:/aos -it --privileged=true --name=ndn-astri-docker --network host -d vaynetian/ndn-astri-docker /bin/bash`
+
+### Run the container
+**run the container**
+
+`docker exec -it ndn-astri-docker bash`
+
+**start mongodb**
+
+`mongdo &`
+
+**start redis server**
+
+`redis-server &`
+
+**start server**
+
+`screen npm run dev`
+
+**start ndn**
+
+`nfd &`
+
+**config ndn route**
+
+modify your cluster name in config
+
+`vi config.json`
+
+create faces and get nexthops(don't forget yourself as well)
+
+*-using ip*
+
+`nfdc face create udp4://xxx`
+
+*-using ethernet*
+
+`nfdc face create remote ether://[mac address] local dev://{your adapter name}`
+
+add route 
+
+`nfdc route add /chat/{your cluster name} nexthop`
+
+*-example:*
+
+`nfdc route add /chat/AAAA 266`
+
+using multicast stragety
+
+`nfdc strategy set prefix /chat/{your cluster name} strategy /localhost/nfd/strategy/multicast`
+
+## Bootstrap yourself
+**use local docker image through dockerfile**
+
+`docker build -t ndn-docker .`
+
+`docker run -v /data/tmp/:/tmp -v /aos:/aos -it --privileged=true --name=ndn-astri-docker --network host -d vaynetian/ndn-docker /bin/bash`
+
+`docker exec -it ndn-astri-docker bash`
+
+**install nodejs**
+```
+RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash \
+    && source ~/.nvm/nvm.sh \
+    && nvm install node \
+    && nvm use node
+```
+**install mongodb**
+
+`sudo apt-get update`
+
+`apt-get install mongodb`
+
+**install redis server**
+
+`sudo apt-get update`
+
+`apt-get install redis-server`
+
+**start ndn**
+
+`nfd &`
+
+**config ndn route**
+
+modify your cluster name in config
+
+`vi config.json`
+
+create faces and get nexthops(don't forget yourself as well)
+
+*-using ip*
+
+`nfdc face create udp4://xxx`
+
+*-using ethernet*
+
+`nfdc face create remote ether://[mac address] local dev://{your adapter name}`
+
+add route 
+
+`nfdc route add /chat/{your cluster name} nexthop`
+
+*-example:*
+
+`nfdc route add /chat/AAAA 266`
+
+using multicast stragety
+
+`nfdc strategy set prefix /chat/{your cluster name} strategy /localhost/nfd/strategy/multicast`
+
+**get the repository**
+
+`git clone ssh://git@10.6.126.115:6061/chainchat-server.git`
+
+`npm i`
+
+`npm run dev &`
+
 ## Overview
 NDN-AFS Project aims at combining named-data networking and ASTRI blockchain file system, especially replacing Tn (tracking node in AFS) by NDN. At the moment, this system can successfully be installed on different systems, i.e. Centos, Ubuntu, and IOT devices like Raspberry Pi. In the future, the system will be the base of chainchat, a decentralized chat tool.
 
