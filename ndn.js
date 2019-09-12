@@ -200,7 +200,7 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
         }
         // if the receiver is not online
         else {
-            await ctx.service.message.add(sender, receiver, data, 'pending')
+            await ctx.service.message.add(sender, receiver, data, opt, 'pending')
         }
 
     } else if (opt === 'publicKey') {
