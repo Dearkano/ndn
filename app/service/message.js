@@ -2,7 +2,7 @@
 
 const Service = require('egg').Service;
 class MessageService extends Service {
-    async add(sender, receiver, afid, status = 'pending') {
+    async add(sender, receiver, afid, type, status = 'pending') {
         const {
             ctx,
         } = this;
@@ -11,6 +11,7 @@ class MessageService extends Service {
             receiver,
             afid,
             status,
+            type,
             timestamp: Date.now()
         });
         return result;
