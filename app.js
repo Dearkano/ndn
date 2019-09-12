@@ -4,7 +4,7 @@ module.exports = app => {
     app.beforeStart(async () => {
         const rs = fs.readFileSync(`${__dirname}/config.json`)
         const config = JSON.parse(rs)
-        const cluster = config.messageNode
+        const cluster = config.MessageNode
         console.log(`==app beforeStart, start Rnode, cluster is ${cluster}==`);
         app.cluster = cluster
         RNStart(app)
