@@ -181,9 +181,11 @@ Echo.prototype.onInterest = async function (prefix, interest, face, interestFilt
             if (!rId) {
                 //await ctx.service.socket.add(sender, receiver, roomId)
                 this.app.io.to(`server-${receiver}`).emit('newMes', JSON.stringify(obj))
+                console.log('pending ')
                 await ctx.service.message.add(sender, receiver, data, 'pending')
             } else {
                 this.app.io.to(roomId).emit('res', JSON.stringify(obj))
+                console.log('sent')
                 await ctx.service.message.add(sender, receiver, data, 'sent')
             }
             const data1 = new Data(interest.getName());
